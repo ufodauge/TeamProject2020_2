@@ -1,5 +1,10 @@
 local maingame = {}
 
+const.define('COUNTDOWN_X', 0)
+const.define('COUNTDOWN_Y', 0)
+
+const.define('COUNTDOWN_TIME', 0)
+
 -- ステートの同時起動が出来ないのでごり押し　しゃーなし
 local stampgame = States.Stampgame
 local taggame = States.Taggame
@@ -17,6 +22,10 @@ end
 function maingame:enter()
     stampgame:enter()
     taggame:enter()
+
+    countdownTimer = CountdownTimer()
+    countdownTimer:setPosition(COUNTDOWN_X, COUNTDOWN_Y)
+    countdownTimer:setTime(COUNTDOWN_TIME)
 end
 
 function maingame:update(dt)
