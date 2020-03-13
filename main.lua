@@ -1,5 +1,7 @@
 -- debug
 lovebird = require 'lovebird'
+lume = require 'lume'
+lurker = require 'lurker'
 
 -- data
 Data = {}
@@ -8,6 +10,10 @@ Data.Font = require 'data.font'
 -- state
 States = {}
 States.Dummy = require 'state.dummy'
+States.Sandbox = require 'state.sandbox'
+States.Stampgame = require 'state.stampgame'
+States.Taggame = require 'state.taggame'
+States.Maingame = require 'state.maingame'
 
 -- library
 Class = require '30log.30log'
@@ -23,6 +29,8 @@ KeyManager = require 'class.keyManager'
 JoystickManager = require 'class.joystickManager'
 AnimationManager = require 'class.animationManager'
 
+SampleTimer = require 'class.sampletimer'
+
 function love.load()
     -- デバッグモードの有効化の際は true を渡すこと
     debug = Debug(true)
@@ -34,6 +42,7 @@ end
 function love.update(dt)
     -- debug
     lovebird.update()
+    lurker.update()
     debug:update(dt)
     --debug
 
