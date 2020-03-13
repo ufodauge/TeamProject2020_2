@@ -7,6 +7,12 @@ lurker = require 'lurker'
 Data = {}
 Data.Font = require 'data.font'
 
+-- library
+Class = require '30log.30log'
+Camera = require 'hump.camera'
+State = require 'hump.gamestate'
+Const = require 'const.const'
+
 -- state
 States = {}
 States.Dummy = require 'state.dummy'
@@ -14,11 +20,6 @@ States.Sandbox = require 'state.sandbox'
 States.Stampgame = require 'state.stampgame'
 States.Taggame = require 'state.taggame'
 States.Maingame = require 'state.maingame'
-
--- library
-Class = require '30log.30log'
-Camera = require 'hump.camera'
-State = require 'hump.gamestate'
 
 -- Debug
 Debug = require 'class.debug.debug'
@@ -41,8 +42,8 @@ end
 
 function love.update(dt)
     -- debug
+    -- lurker.update()
     lovebird.update()
-    lurker.update()
     debug:update(dt)
     --debug
 
