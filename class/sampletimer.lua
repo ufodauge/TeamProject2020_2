@@ -63,7 +63,7 @@ function SampleTimer:toggle()
 end
 
 function SampleTimer:delete()
-    self.super.delete(self)
+    self.super:delete(self)
 end
 
 return SampleTimer

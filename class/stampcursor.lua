@@ -1,3 +1,18 @@
+--[[
+    StamoCursor
+    ハンコのカーソル
+    
+    func:
+        setPapersSize(column(number), row(number))
+        台紙の縦横の配置を設定する
+            column(number)
+            列数
+            row(number)
+            行数
+
+        getStatus()
+        捺印した場所のインデックスを返す
+]]
 local DummyClass = Instance:extend('DummyClass')
 
 function DummyClass:init()

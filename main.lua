@@ -6,6 +6,7 @@ lurker = require 'lurker'
 -- data
 Data = {}
 Data.Font = require 'data.font'
+Data.Background = require 'data.background'
 
 -- library
 Class = require '30log.30log'
@@ -13,12 +14,13 @@ Camera = require 'hump.camera'
 State = require 'hump.gamestate'
 Const = require 'const.const'
 
+-- defines
+require 'data.defines'
+
 -- state
 States = {}
 States.Dummy = require 'state.dummy'
 States.Sandbox = require 'state.sandbox'
-States.Stampgame = require 'state.stampgame'
-States.Taggame = require 'state.taggame'
 States.Maingame = require 'state.maingame'
 
 -- Debug
@@ -31,6 +33,11 @@ JoystickManager = require 'class.joystickManager'
 AnimationManager = require 'class.animationManager'
 
 SampleTimer = require 'class.sampletimer'
+CountdownTimer = require 'class.countdowntimer'
+Background = require 'class.Background'
+Score = require 'class.score'
+Paper = require 'class.paper'
+StampCursor = require 'class.stampcursor'
 
 function love.load()
     -- デバッグモードの有効化の際は true を渡すこと

@@ -73,6 +73,14 @@ function Instance:setPriority(priority)
     -- print('------------------------------')
 end
 
+function Instance:setPosition(x, y)
+    self.x, self.y = x, y
+end
+
+function Instance:setSize(w, h)
+    self.width, self.height = w, h
+end
+
 function Instance:delete()
     setmetatable(self, {__mode = 'k'})
     self = nil

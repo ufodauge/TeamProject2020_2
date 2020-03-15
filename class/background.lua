@@ -1,3 +1,13 @@
+--[[
+    Background
+    背景を表示する
+    
+    func:
+        setImage(image(Drawable))
+        表示する画像を設定する
+            image(Drawable)
+            イメージデータ
+]]
 local DummyClass = Instance:extend('DummyClass')
 
 function DummyClass:init()
