@@ -11,7 +11,7 @@ function maingame:enter()
     background = {}
     background = Background()
     background:setPosition(COUNTDOWN_X, COUNTDOWN_Y)
-    background:setImage(Data.Background.image)
+    background:setImage(Data.Image.background)
 
     countdownTimer = CountdownTimer()
     countdownTimer:setPosition(COUNTDOWN_X, COUNTDOWN_Y)
@@ -45,10 +45,23 @@ function maingame:enter()
     stampCursor:setPapersSize(PAPER_COLUMN, PAPER_TOTAL / PAPER_COLUMN)
 
     -- taggame
-    -- ︙
+    -- world
+    world = Windfield.newWorld()
+    world:addCollisionClass('Player')
+    world:addCollisionClass('Enemy')
+    world:addCollisionClass('Food')
+    world:addCollisionClass('Obstacle')
+    world:addCollisionClass('Bean')
+
+    -- taggame player
+    player = Player()
+    player:setPhysicsStatus('Player', PLAYER_COLLISION_DATA, world)
 end
 
 function maingame:update(dt)
+    -- 物理空間の更新処理
+    world:update(dt)
+
     -- ペナルティの状況を監視
     countdownTimer:setPenalty(Paper:getPenalty())
 
@@ -65,6 +78,8 @@ function maingame:update(dt)
 end
 
 function maingame:draw()
+    -- for debugging
+    world:draw()
 end
 
 function maingame:leave()
@@ -75,6 +90,9 @@ function maingame:leave()
         paper:delete()
     end
     stampCursor:delete()
+
+    player:delete()
+    world:destroy()
 end
 
 return maingame

@@ -44,15 +44,11 @@ function Instance:draw()
     love.graphics.setColor(1, 1, 1, 1)
     for i, obj in pairs(Instance._list) do
         -- オブジェクトが無ければ処理しない
-        if not obj.draw then
-            break
+        if obj.draw then
+            obj.camera:attach()
+            obj:draw()
+            obj.camera:detach()
         end
-
-        obj.camera:attach()
-
-        obj:draw()
-
-        obj.camera:detach()
     end
 end
 
@@ -81,9 +77,11 @@ function Instance:setSize(w, h)
     self.width, self.height = w, h
 end
 
-function Instance:delete()
+function Instance:delete(_self)
     setmetatable(self, {__mode = 'k'})
     self = nil
+    setmetatable(_self, {__mode = 'k'})
+    _self = nil
 end
 
 return Instance

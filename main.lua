@@ -1,17 +1,18 @@
 -- debug
 lovebird = require 'lovebird'
 lume = require 'lume'
-lurker = require 'lurker'
+-- lurker = require 'lurker'
 
 -- data
 Data = {}
 Data.Font = require 'data.font'
-Data.Background = require 'data.background'
+Data.Image = require 'data.image'
 
 -- library
 Class = require '30log.30log'
 Camera = require 'hump.camera'
 State = require 'hump.gamestate'
+Windfield = require 'windfield'
 Const = require 'const.const'
 
 -- defines
@@ -33,11 +34,20 @@ JoystickManager = require 'class.joystickManager'
 AnimationManager = require 'class.animationManager'
 
 SampleTimer = require 'class.sampletimer'
+
 CountdownTimer = require 'class.countdowntimer'
 Background = require 'class.Background'
+
 Score = require 'class.score'
 Paper = require 'class.paper'
 StampCursor = require 'class.stampcursor'
+
+Player = require 'class.player'
+Enemy = require 'class.enemy'
+Obstacle = require 'class.obstacle'
+Food = require 'class.food'
+Bean = require 'class.bean'
+Wall = require 'class.wall'
 
 function love.load()
     -- デバッグモードの有効化の際は true を渡すこと
