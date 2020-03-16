@@ -14,11 +14,11 @@ Const.define('SCORE_X', 0)
 Const.define('SCORE_Y', 0)
 
 -- paper
-Const.define('PAPER_X', 0) -- 左上に配置する紙を前提とする
-Const.define('PAPER_Y', 0) -- 同上
-Const.define('PAPER_WIDTH', 0)
-Const.define('PAPER_HEIGHT', 0)
+Const.define('PAPER_X', 32) -- 左上に配置する紙を前提とする
+Const.define('PAPER_Y', 32) -- 同上
+Const.define('PAPER_WIDTH', 76)
+Const.define('PAPER_HEIGHT', 76)
 Const.define('PAPER_TOTAL', 36)
 Const.define('PAPER_COLUMN', 6)
 
-Const.define('PAPER_IMPRINTED_RATE', 0.15)
+Const.define('PAPER_IMPRINTED_RATE', 0.25)

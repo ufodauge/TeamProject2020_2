@@ -6,7 +6,7 @@ lurker = require 'lurker'
 -- data
 Data = {}
 Data.Font = require 'data.font'
-Data.Background = require 'data.background'
+Data.Image = require 'data.image'
 
 -- library
 Class = require '30log.30log'
