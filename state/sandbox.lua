@@ -6,6 +6,9 @@ function sandbox:init()
 end
 
 function sandbox:enter()
+    ct = CountdownTimer()
+    ct:setTime(5)
+    ct:toggle()
 end
 
 function sandbox:update(dt)
