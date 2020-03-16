@@ -38,7 +38,7 @@ function Bean:setPhysicsStatus(collision_class, collision_data, world)
         self.colliders[i]:setRestitution(0.3)
         self.colliders[i]:setCollisionClass(collision_class)
         self.colliders[i]:setLinearDamping(20)
-        self.colliders[i]:applyLinearImpulse(lume.vector(self.angle + (math.pi / 20) * (i - (BEAN_MAX + 1) / 2), BEAN_VELOCITY * math.abs(Bean.RNG:randomNormal())))
+        self.colliders[i]:applyLinearImpulse(lume.vector(self.angle + (math.pi / 20) * (i - (BEAN_MAX + 1) / 2), BEAN_VELOCITY * (0.4 + math.abs(Bean.RNG:randomNormal()) / 2)))
     end
 end
 
