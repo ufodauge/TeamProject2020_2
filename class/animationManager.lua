@@ -11,6 +11,7 @@ function AnimationManager:setTilesets(tilesets)
     self.columns = tilesets.columns
     self.tilecount = tilesets.tilecount
     self.image = love.graphics.newImage(tilesets.image)
+    self.image:setFilter('nearest')
 
     self.quads = {}
 
@@ -38,7 +39,6 @@ function AnimationManager:draw(x, y, r, sx, sy)
     sx = sx or 1
     sy = sy or sx
 
-    love.graphics.setColor(1, 1, 1, 1)
     love.graphics.draw(self.image, self.quads[self.type][self.animationid].quad, x, y, r, sx, sy)
 end
 
@@ -52,6 +52,7 @@ end
 
 function AnimationManager:play()
     self.isPlaying = true
+    self.animationid = 1
 end
 
 function AnimationManager:update(dt)
@@ -63,7 +64,6 @@ function AnimationManager:update(dt)
                 self.animationid = self.animationid + 1
             else
                 self.isPlaying = false
-                self.animationid = 1
             end
         end
     end

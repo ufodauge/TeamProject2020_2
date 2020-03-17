@@ -159,6 +159,8 @@ function StampCursor:init()
         }
     )
 
+    self.image = Data.Image.highlight
+    self.image:setFilter('nearest')
     self.animationManager = AnimationManager()
     self.animationManager:setTilesets(Data.Animation.animationStamp)
     self.animationManager:setPermanence(false)
@@ -172,8 +174,8 @@ end
 
 function StampCursor:draw()
     love.graphics.setColor(1, 1, 1, 1)
-    -- love.graphics.draw(Data.Image.stamp, self.x, self.y, 0, 2, 2)
 
+    love.graphics.draw(self.image, self.x, self.y, 0, 2, 2)
     self.animationManager:draw(self.x, self.y, 0, 2, 2)
 
     -- love.graphics.print("StampPosOnPaper(" .. self.positionOnPaperX .. ", " .. self.positionOnPaperY .. ")"..self:getIndex(self.positionOnPaperX,self.positionOnPaperY),20,520)

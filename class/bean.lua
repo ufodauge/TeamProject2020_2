@@ -20,10 +20,12 @@ end
 
 function Bean:draw()
     love.graphics.setColor(1, 1, 1, 1)
-    -- self.x, self.y = self.colliders:getPosition()
-    -- self.x = self.x - self.collision_data[3]
-    -- self.y = self.y - self.collision_data[3]
-    -- love.graphics.draw(self.image, self.x, self.y)
+    for i, collider in ipairs(self.colliders) do
+        self.x, self.y = collider:getPosition()
+        self.x = self.x - self.collision_data[3]
+        self.y = self.y - self.collision_data[3]
+        love.graphics.draw(self.image, self.x, self.y, 0, self.suspend)
+    end
 end
 
 function Bean:setPhysicsStatus(collision_class, collision_data, world)
@@ -42,8 +44,10 @@ function Bean:setPhysicsStatus(collision_class, collision_data, world)
     end
 end
 
-function Bean:setImage(imageData)
+function Bean:setImage(imageData, suspend)
     self.image = imageData
+    self.image:setFilter('nearest')
+    self.suspend = suspend
 end
 
 function Bean:setAngle(angle)

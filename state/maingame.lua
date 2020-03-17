@@ -159,11 +159,12 @@ function maingame:update(dt)
         beans:setPosition(player:getPosition())
         beans:setAngle(player:getAngle())
         beans:setPhysicsStatus('Bean', BEAN_COLLISION_DATA, world)
+        beans:setImage(Data.Image.bean, 0.25)
     end
 
     -- カウント終了時の処理
     if countdownTimer:isOver() then
-    -- State.push(Pause)
+        State.push(States.Gameover)
     end
 end
 
