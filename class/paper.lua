@@ -24,6 +24,7 @@
 local Paper = Instance:extend('Paper')
 
 Paper.score = 0
+Paper.missFlag = 0
 
 function Paper:init()
     Paper.super:init(self)
@@ -62,8 +63,8 @@ end
 
 -- ペナルティがあったフレームのみ 1 と返す
 function Paper:getPenalty()
-    self.returnValue = self.missFlag
-    self.missFlag = 0
+    self.returnValue = Paper.missFlag
+    Paper.missFlag = 0
     return self.returnValue
 end
 
@@ -87,7 +88,7 @@ function Paper:stamp()
     if (self.status == 'imprinted') then
         -- self:setStatus("plain")
         -- ミス
-        self.missFlag = 1
+        Paper.missFlag = 1
     else
         -- 正しくハンコ押した
         self.correctFlag = 1

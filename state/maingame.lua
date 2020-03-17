@@ -113,9 +113,11 @@ function maingame:update(dt)
         papers[stampedIndex]:stamp()
 
         -- ハンコ1枚押して食べ物を出現させる場合の処理
-        foods[#foods + 1] = Food()
-        foods[#foods]:setPhysicsStatus('Food', FOOD_COLLISION_DATA, world)
-        foods[#foods]:setImage(Data.Image.food)
+        if Paper:getPenalty() ~= 1 then
+            foods[#foods + 1] = Food()
+            foods[#foods]:setPhysicsStatus('Food', FOOD_COLLISION_DATA, world)
+            foods[#foods]:setImage(Data.Image.food)
+        end
     end
 
     -- 物理空間の更新処理

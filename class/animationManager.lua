@@ -29,22 +29,43 @@ function AnimationManager:setTilesets(tilesets)
     self.ms = 0
     self.type = 1
     self.animationid = 1
+
+    self.permanence = true
+    self.isPlaying = false
 end
 
-function AnimationManager:draw(x, y)
+function AnimationManager:draw(x, y, r, sx, sy)
+    sx = sx or 1
+    sy = sy or sx
+
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.draw(self.image, self.quads[self.type][self.animationid].quad, x, y)
+    love.graphics.draw(self.image, self.quads[self.type][self.animationid].quad, x, y, r, sx, sy)
 end
 
 function AnimationManager:setTile(id)
     self.type = id
 end
 
+function AnimationManager:setPermanence(permanence)
+    self.permanence = permanence
+end
+
+function AnimationManager:play()
+    self.isPlaying = true
+end
+
 function AnimationManager:update(dt)
-    self.ms = self.ms + dt * 1000
-    if self.ms >= self.quads[self.type][self.animationid].duration then
-        self.ms = self.ms - self.quads[self.type][self.animationid].duration
-        self.animationid = self.animationid < self.quads[self.type].animationmax and self.animationid + 1 or 1
+    if self.permanence or self.isPlaying then
+        self.ms = self.ms + dt * 1000
+        if self.ms >= self.quads[self.type][self.animationid].duration then
+            self.ms = self.ms - self.quads[self.type][self.animationid].duration
+            if self.animationid < self.quads[self.type].animationmax then
+                self.animationid = self.animationid + 1
+            else
+                self.isPlaying = false
+                self.animationid = 1
+            end
+        end
     end
 end
 
