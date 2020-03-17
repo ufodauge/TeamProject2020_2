@@ -18,7 +18,7 @@ local CountdownTimer = Instance:extend('CountdownTimer')
 
 function CountdownTimer:init()
     CountdownTimer.super:init(self)
-    
+
     self.time = 0
     self.started = false
     self.finished = false
@@ -65,7 +65,6 @@ end
 
 function CountdownTimer:setTime(time)
     self.time = time
-    
 end
 
 function CountdownTimer:setPenalty(penalty)

@@ -20,9 +20,11 @@ function StampCursor:init()
     self.paperColumn = PAPER_COLUMN
     self.paperRow = PAPER_TOTAL / PAPER_COLUMN
 
-    self.positionOnPaperX = math.floor((self.paperColumn-1)/2)
-    self.positionOnPaperY = math.floor((self.paperRow-1)/2)
+    self.positionOnPaperX = math.floor((self.paperColumn - 1) / 2)
+    self.positionOnPaperY = math.floor((self.paperRow - 1) / 2)
     self.onPaperIndex = 0
+
+    self.isJoystickReleased = {x = true, y = true}
 
     self.keyManager = KeyManager()
     self.keyManager:register(
@@ -30,7 +32,7 @@ function StampCursor:init()
             {
                 key = 'z',
                 func = function()
-                    self.onPaperIndex = self:getIndex(self.positionOnPaperX,self.positionOnPaperY)
+                    self.onPaperIndex = self:getIndex(self.positionOnPaperX, self.positionOnPaperY)
                 end,
                 rep = false,
                 act = 'pressed'
@@ -38,7 +40,7 @@ function StampCursor:init()
             {
                 key = 'up',
                 func = function()
-                    self:move(0,-1)
+                    self:move(0, -1)
                 end,
                 rep = false,
                 act = 'pressed'
@@ -46,7 +48,7 @@ function StampCursor:init()
             {
                 key = 'down',
                 func = function()
-                    self:move(0,1)
+                    self:move(0, 1)
                 end,
                 rep = false,
                 act = 'pressed'
@@ -54,7 +56,7 @@ function StampCursor:init()
             {
                 key = 'right',
                 func = function()
-                    self:move(1,0)
+                    self:move(1, 0)
                 end,
                 rep = false,
                 act = 'pressed'
@@ -62,10 +64,94 @@ function StampCursor:init()
             {
                 key = 'left',
                 func = function()
-                    self:move(-1,0)
+                    self:move(-1, 0)
                 end,
                 rep = false,
                 act = 'pressed'
+            }
+        }
+    )
+
+    self.joystickManager = JoystickManager()
+    self.joystickManager:register(
+        {
+            {
+                key = 'a',
+                func = function()
+                    self.onPaperIndex = self:getIndex(self.positionOnPaperX, self.positionOnPaperY)
+                end,
+                rep = false,
+                act = 'pressed'
+            },
+            {
+                key = 'b',
+                func = function()
+                    self.onPaperIndex = self:getIndex(self.positionOnPaperX, self.positionOnPaperY)
+                end,
+                rep = false,
+                act = 'pressed'
+            },
+            {
+                key = 'lefty',
+                func = function(axisValue)
+                    if not self.isJoystickReleased.x or not self.isJoystickReleased.y then
+                        return
+                    end
+                    if axisValue > 0 then
+                        self:move(0, 1)
+                    else
+                        self:move(0, -1)
+                    end
+                end,
+                rep = false,
+                act = 'pressed'
+            },
+            {
+                key = 'leftx',
+                func = function(axisValue)
+                    if not self.isJoystickReleased.x or not self.isJoystickReleased.y then
+                        return
+                    end
+                    if axisValue > 0 then
+                        self:move(1, 0)
+                    else
+                        self:move(-1, 0)
+                    end
+                end,
+                rep = false,
+                act = 'pressed'
+            },
+            {
+                key = 'leftx',
+                func = function(axisValue)
+                    self.isJoystickReleased.x = false
+                end,
+                rep = true,
+                act = 'pressed'
+            },
+            {
+                key = 'lefty',
+                func = function(axisValue)
+                    self.isJoystickReleased.y = false
+                end,
+                rep = true,
+                act = 'pressed'
+            },
+            {
+                key = 'leftx',
+                func = function(axisValue)
+                    self.isJoystickReleased.x = true
+                end,
+                rep = true,
+                act = 'released'
+            },
+            {
+                key = 'lefty',
+                func = function(axisValue)
+                    self.isJoystickReleased.y = true
+                end,
+                rep = true,
+                act = 'released'
             }
         }
     )
@@ -73,11 +159,12 @@ end
 
 function StampCursor:update(dt)
     self.keyManager:update(dt)
+    self.joystickManager:update(dt)
 end
 
 function StampCursor:draw()
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.draw(Data.Image.stamp, self.x, self.y,0,2,2)
+    love.graphics.draw(Data.Image.stamp, self.x, self.y, 0, 2, 2)
     -- love.graphics.print("StampPosOnPaper(" .. self.positionOnPaperX .. ", " .. self.positionOnPaperY .. ")"..self:getIndex(self.positionOnPaperX,self.positionOnPaperY),20,520)
 end
 
@@ -96,10 +183,9 @@ function StampCursor:getStatus()
     return returnValue
 end
 
-function StampCursor:move(dx,dy)
+function StampCursor:move(dx, dy)
     if self.positionOnPaperX + dx >= 0 and self.positionOnPaperX + dx < self.paperColumn then
         if self.positionOnPaperY + dy >= 0 and self.positionOnPaperY + dy < self.paperRow then
-
             self.positionOnPaperX = self.positionOnPaperX + dx
             self.positionOnPaperY = self.positionOnPaperY + dy
 

@@ -38,9 +38,9 @@ function KeyManager:register(properties)
 
         self.key_updator[property.key]['func_' .. action_type .. '_' .. repeat_type] = property.func
 
-        print('----------')
-        print('\tkey : ' .. property.key .. '\n\trepeat : ' .. repeat_type .. '\n\ttype : ' .. action_type)
-        print('----------')
+        -- print('----------')
+        -- print('\tkey : ' .. property.key .. '\n\trepeat : ' .. repeat_type .. '\n\ttype : ' .. action_type)
+        -- print('----------')
     end
 end
 -- function KeyManager:register(key, func, rep, action_type)

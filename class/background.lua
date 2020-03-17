@@ -8,21 +8,26 @@
             image(Drawable)
             イメージデータ
 ]]
-local DummyClass = Instance:extend('DummyClass')
+local Background = Instance:extend('Background')
 
-function DummyClass:init()
-    DummyClass.super:init(self)
+function Background:init()
+    Background.super:init(self)
 end
 
-function DummyClass:update(dt)
+function Background:update(dt)
 end
 
-function DummyClass:draw()
+function Background:draw()
     love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.draw(self.image, self.x, self.y)
 end
 
-function DummyClass:delete()
+function Background:setImage(imageData)
+    self.image = imageData
+end
+
+function Background:delete()
     self.super:delete(self) -- selfを明示的に書いてあげる必要あり
 end
 
-return DummyClass
+return Background
