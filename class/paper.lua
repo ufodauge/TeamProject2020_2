@@ -30,6 +30,8 @@ function Paper:init()
     Paper.super:init(self)
     self.status = "plain"
     self.grHandle = Data.Image.emptyDocument
+    self.missFlag = 0       -- ミスしたら１
+    self.correctFlag = 0    -- 正しくハンコを押したら１
 end
 
 function Paper:update(dt)
@@ -37,8 +39,6 @@ end
 
 function Paper:draw()
     love.graphics.setColor(1, 1, 1, 1)
-    --love.graphics.rectangle("line", self.x, self.y, PAPER_WIDTH, PAPER_HEIGHT)
-    --love.graphics.draw( Data.Image.emptyDocument, x, y, r, sx, sy, ox, oy, kx, ky )
     love.graphics.draw(self.grHandle, self.x, self.y,0,2,2)
 end
 
@@ -48,32 +48,46 @@ end
 
 function Paper:setStatus(status)
     self.status = status
+
     if self.status == "plain" then
         self.grHandle = Data.Image.emptyDocument
     end
     if self.status == "imprinted" then
         self.grHandle = Data.Image.approvedDocument
     end
-
-
 end
 
---スコアが入ったフレームだけスコアを返す
-function Paper:getStatus()
+-- ペナルティがあったフレームのみ 1 と返す
+function Paper:getPenalty()
+    self.returnValue = self.missFlag
+    self.missFlag = 0
+    return self.returnValue
+end
 
+-- スコアが入ったフレームだけスコアを返す
+function Paper:getStatus()
+    self.returnValue = 0
+    if self.correctFlag == 1 then
+        self.returnValue = SCORE_STAMPED_SCORE
+        self.correctFlag = 0
+    end
+
+    return self.returnValue
 end
 
 function Paper:setImprintStatus(index)
     self.index.status = "inprinted"
 end
 
---捺印する
+-- 捺印する
 function Paper:stamp()
     if(self.status == "imprinted")then
-        love.graphics.setColor(1, 0, 0, 1)
-        love.graphics.rectangle("fill", 0, 0, 1024, 512)
-        self:setStatus("plain")
+        -- ミス
+        self.missFlag = 1
+        -- self:setStatus("plain")
     else
+        -- 正しくハンコ押した
+        self.correctFlag = 1
         self:setStatus("imprinted")
     end
 end

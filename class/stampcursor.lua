@@ -78,7 +78,7 @@ end
 function StampCursor:draw()
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.draw(Data.Image.stamp, self.x, self.y,0,2,2)
-    love.graphics.print("StampPosOnPaper(" .. self.positionOnPaperX .. ", " .. self.positionOnPaperY .. ")"..self:getIndex(self.positionOnPaperX,self.positionOnPaperY),20,520)
+    -- love.graphics.print("StampPosOnPaper(" .. self.positionOnPaperX .. ", " .. self.positionOnPaperY .. ")"..self:getIndex(self.positionOnPaperX,self.positionOnPaperY),20,520)
 end
 
 function StampCursor:delete()

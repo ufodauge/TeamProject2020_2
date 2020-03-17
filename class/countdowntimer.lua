@@ -18,7 +18,7 @@ local CountdownTimer = Instance:extend('CountdownTimer')
 
 function CountdownTimer:init()
     CountdownTimer.super:init(self)
-    Const.define("PENALTY_TIME",3.0)
+    
     self.time = 0
     self.started = false
     self.finished = false
@@ -49,7 +49,7 @@ end
 function CountdownTimer:draw()
     love.graphics.setColor(1, 1, 1, 1)
 
-    love.graphics.print('TIME: ' .. self:getText(), COUNTDOWN_X, COUNTDOWN_Y)
+    love.graphics.print('TIME: ' .. self:getText(), self.x, self.y)
 
     --[[
     love.graphics.print(self.time,20,80)
@@ -69,8 +69,8 @@ function CountdownTimer:setTime(time)
 end
 
 function CountdownTimer:setPenalty(penalty)
-    if penalty == 1 then
-        self.time = self.time - PENALTY_TIME
+    if penalty == 1 and self.time ~= 0 then
+        self.time = self.time - COUNTDOWN_PENALTY_TIME_BY_MISSING_STAMP
     end
 end
 

@@ -6,6 +6,7 @@ image.maingame = {}
 image.approvedDocument = love.graphics.newImage('resource/approvedDocument.png')
 image.emptyDocument = love.graphics.newImage('resource/emptyDocument.png')
 image.stamp = love.graphics.newImage('resource/stamp.png')
+image.stamp16bit = love.graphics.newImage('resource/stamp16bit.png')
 
 
 return image

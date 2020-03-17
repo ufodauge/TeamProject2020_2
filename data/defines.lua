@@ -4,14 +4,15 @@ Const.define('BACKGROUND_X', 0)
 Const.define('BACKGROUND_Y', 0)
 
 -- countdowntimer
-Const.define('COUNTDOWN_X', 20)
-Const.define('COUNTDOWN_Y', 500)
-
-Const.define('COUNTDOWN_MAX_TIME', 0)
+Const.define('COUNTDOWN_X', 40)
+Const.define('COUNTDOWN_Y', 510)
+Const.define('COUNTDOWN_MAX_TIME', 60)
+Const.define("COUNTDOWN_PENALTY_TIME_BY_MISSING_STAMP",3.0)
 
 -- score
-Const.define('SCORE_X', 0)
-Const.define('SCORE_Y', 0)
+Const.define('SCORE_X', 40)
+Const.define('SCORE_Y', 530)
+Const.define('SCORE_STAMPED_SCORE', 200)
 
 -- paper
 Const.define('PAPER_X', 32) -- 左上に配置する紙を前提とする

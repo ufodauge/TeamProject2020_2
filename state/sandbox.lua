@@ -7,6 +7,15 @@ function sandbox:init()
 end
 
 function sandbox:enter()
+    countdownTimer = CountdownTimer()
+    countdownTimer:setPosition(COUNTDOWN_X, COUNTDOWN_Y)
+    countdownTimer:setTime(COUNTDOWN_MAX_TIME)
+    countdownTimer:toggle()
+
+    score = Score()
+    score:setPosition(SCORE_X, SCORE_Y)
+    score:setScore(0)
+    
     -- stampgame
     papers = {}
     for i = 1, PAPER_TOTAL do
@@ -35,11 +44,12 @@ function sandbox:enter()
 end
 
 function sandbox:update(dt)
-    -- ペナルティの状況を監視
-    --countdownTimer:setPenalty(Paper:getPenalty())
-
-    -- スコアの状況を監視
-    --score:setStatus(Paper:getStatus())
+    for i = 1, PAPER_TOTAL do
+        -- ペナルティの状況を監視
+        countdownTimer:setPenalty(papers[i]:getPenalty())
+        -- スコアの状況を監視
+        score:setStatus(papers[i]:getStatus())
+    end
 
     -- 捺印の状況を監視
     stampedIndex = stampCursor:getStatus()
@@ -54,7 +64,6 @@ function sandbox:draw()
     love.graphics.setColor(1, 1, 1, 1)
     --love.graphics.rectangle("fill", 0, 0, 512, 512)
 
-    love.graphics.print(love.math.random(0,100),512,500)
 end
 
 function sandbox:leave()
