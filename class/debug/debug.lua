@@ -283,6 +283,67 @@ function Debug:init(valid)
                 act = 'pressed'
             },
             {
+                key = 'home',
+                func = function()
+                    if self:is_active() then
+                        self:deactivate()
+                    else
+                        self:activate()
+                    end
+                end,
+                rep = false,
+                act = 'pressed'
+            },
+            {
+                key = 'pageup',
+                func = function()
+                    -- 非表示の際は更新しない
+                    if not self:is_active() then
+                        return
+                    end
+
+                    -- 上方向への移動
+                    cursor_move(self, 'up')
+                end,
+                rep = false,
+                act = 'pressed'
+            },
+            {
+                key = 'pagedown',
+                func = function()
+                    -- 非表示の際は更新しない
+                    if not self:is_active() then
+                        return
+                    end
+
+                    -- 下方向への移動
+                    cursor_move(self, 'down')
+                end,
+                rep = false,
+                act = 'pressed'
+            },
+            {
+                key = 'end',
+                func = function()
+                    -- 非表示の際は更新しない
+                    if not self:is_active() then
+                        return
+                    end
+
+                    -- returns current dir
+                    local dir = getCurrentDirectory(self)
+
+                    -- 決定時の具体的な処理
+                    if dir[self.path[#self.path]].attribute == 'file' then
+                        dir[self.path[#self.path]].contents()
+                    elseif dir[self.path[#self.path]].attribute == 'dir' then
+                        move_path(self, self.path[#self.path])
+                    end
+                end,
+                rep = false,
+                act = 'pressed'
+            },
+            {
                 key = 'f1',
                 func = function()
                     if self:is_active() then
