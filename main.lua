@@ -22,6 +22,7 @@ States = {}
 States.Dummy = require 'state.dummy'
 States.Sandbox = require 'state.sandbox'
 States.Maingame = require 'state.maingame'
+States.Title = require 'state.title'
 
 -- Debug
 Debug = require 'class.debug.debug'
@@ -44,7 +45,7 @@ function love.load()
     debug = Debug(true)
 
     State.registerEvents()
-    State.switch(States.Dummy)
+    State.switch(States.Title)
 end
 
 function love.update(dt)
