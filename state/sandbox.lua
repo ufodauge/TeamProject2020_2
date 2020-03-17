@@ -3,6 +3,7 @@ local sandbox = {}
 sandbox.name = 'sandbox'
 
 function sandbox:init()
+    love.keyboard.setKeyRepeat(true)
 end
 
 function sandbox:enter()
@@ -52,6 +53,42 @@ function sandbox:enter()
         walls[i] = Wall()
         walls[i]:setPhysicsStatus('Wall', _G['WALL_COLLISION_DATA_' .. i], world)
     end
+
+        countdownTimer = CountdownTimer()
+    countdownTimer:setPosition(COUNTDOWN_X, COUNTDOWN_Y)
+    countdownTimer:setTime(COUNTDOWN_MAX_TIME)
+    countdownTimer:toggle()
+
+    score = Score()
+    score:setPosition(SCORE_X, SCORE_Y)
+    score:setScore(0)
+    
+    -- stampgame
+    papers = {}
+    for i = 1, PAPER_TOTAL do
+        papers[i] = Paper()
+        papers[i].index = i
+
+        local x = PAPER_X + PAPER_WIDTH * ((i-1) % PAPER_COLUMN)
+        local y = PAPER_Y + PAPER_HEIGHT * math.floor((i - 1) / (PAPER_TOTAL / PAPER_COLUMN))
+        papers[i]:setPosition(x, y)
+
+        -- 捺印済み(imorinted)か否か(plain)の設定
+        local state = "plain"
+        if love.math.random(1,100) <= PAPER_IMPRINTED_RATE*100 then 
+            state = "imprinted"
+        end
+        papers[i]:setStatus(state)
+    end
+
+    stampCursor = StampCursor()
+    -- 台紙群の中央に配置
+    local x = PAPER_X + PAPER_WIDTH * ((PAPER_TOTAL) / 2 / PAPER_COLUMN -1)
+    local y = PAPER_Y + PAPER_HEIGHT * math.floor(((PAPER_TOTAL + 1) / 2 - 1) / (PAPER_TOTAL / PAPER_COLUMN))
+    stampCursor:setPosition(x, y)
+    -- 台紙の配置を設定する
+    stampCursor:setPapersSize(PAPER_COLUMN, PAPER_TOTAL / PAPER_COLUMN)
+end
 end
 
 function sandbox:update(dt)
@@ -73,12 +110,32 @@ function sandbox:update(dt)
         beans:setPosition(player:getPosition())
         beans:setAngle(player:getAngle())
         beans:setPhysicsStatus('Bean', BEAN_COLLISION_DATA, world)
+
+
+function sandbox:update(dt)
+    for i = 1, PAPER_TOTAL do
+        -- ペナルティの状況を監視
+        countdownTimer:setPenalty(papers[i]:getPenalty())
+        -- スコアの状況を監視
+        score:setStatus(papers[i]:getStatus())
+    end
+
+    -- 捺印の状況を監視
+    stampedIndex = stampCursor:getStatus()
+    if(stampedIndex ~= 0)then
+        papers[stampedIndex]:stamp()
     end
 end
 
 function sandbox:draw()
     -- for debugging
     world:draw(0.3)
+
+    love.graphics.setDefaultFilter("nearest", "nearest",100)
+
+    love.graphics.setColor(1, 1, 1, 1)
+    --love.graphics.rectangle("fill", 0, 0, 512, 512)
+
 end
 
 function sandbox:leave()

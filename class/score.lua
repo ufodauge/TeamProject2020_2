@@ -8,21 +8,33 @@
             score(number)
             計上するスコア
 ]]
-local DummyClass = Instance:extend('DummyClass')
+local Score = Instance:extend('Score')
 
-function DummyClass:init()
-    DummyClass.super:init(self)
+function Score:init()
+    Score.super:init(self)
+
+    self.score = 0
 end
 
-function DummyClass:update(dt)
+function Score:update(dt)
 end
 
-function DummyClass:draw()
+function Score:draw()
     love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.print('SCORE: ' .. self.score, self.x, self.y)
+
 end
 
-function DummyClass:delete()
+function Score:delete()
     self.super:delete(self) -- selfを明示的に書いてあげる必要あり
 end
 
-return DummyClass
+function Score:setScore(score)
+    self.score = score
+end
+
+function Score:setStatus(dScore)
+    self.score = self.score + dScore
+end
+
+return Score

@@ -234,7 +234,7 @@ function Debug:init(valid)
     self.keys:register(
         {
             {
-                key = 'pageup',
+                key = 'f3',
                 func = function()
                     -- 非表示の際は更新しない
                     if not self:is_active() then
@@ -248,7 +248,7 @@ function Debug:init(valid)
                 act = 'pressed'
             },
             {
-                key = 'pagedown',
+                key = 'f4',
                 func = function()
                     -- 非表示の際は更新しない
                     if not self:is_active() then
@@ -262,7 +262,7 @@ function Debug:init(valid)
                 act = 'pressed'
             },
             {
-                key = 'end',
+                key = 'f2',
                 func = function()
                     -- 非表示の際は更新しない
                     if not self:is_active() then
@@ -283,7 +283,7 @@ function Debug:init(valid)
                 act = 'pressed'
             },
             {
-                key = 'home',
+                key = 'f1',
                 func = function()
                     if self:is_active() then
                         self:deactivate()

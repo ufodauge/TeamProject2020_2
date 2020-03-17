@@ -12,7 +12,8 @@
         ペナルティがあったフレームのみ 1 と返す
 
         getStatus()
-        ペナルティがあったフレームのみスコアを返す
+        ハンコが正常に押されたフレームのみスコアを返す
+        ❌ペナルティがあったフレームのみスコアを返す
 
         setImprintStatus(index(number))
         捺印があった台紙を監視する
@@ -20,21 +21,75 @@
             捺印されたフレームにカーソルが合っていた台紙のインデックス
             （通常は 0 ）
 ]]
-local DummyClass = Instance:extend('DummyClass')
+local Paper = Instance:extend('Paper')
 
-function DummyClass:init()
-    DummyClass.super:init(self)
+Paper.score = 0
+
+
+function Paper:init()
+    Paper.super:init(self)
+    self.status = "plain"
+    self.grHandle = Data.Image.emptyDocument
+    self.missFlag = 0       -- ミスしたら１
+    self.correctFlag = 0    -- 正しくハンコを押したら１
 end
 
-function DummyClass:update(dt)
+function Paper:update(dt)
 end
 
-function DummyClass:draw()
+function Paper:draw()
     love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.draw(self.grHandle, self.x, self.y,0,2,2)
 end
 
-function DummyClass:delete()
+function Paper:delete()
     self.super:delete(self) -- selfを明示的に書いてあげる必要あり
 end
 
-return DummyClass
+function Paper:setStatus(status)
+    self.status = status
+
+    if self.status == "plain" then
+        self.grHandle = Data.Image.emptyDocument
+    end
+    if self.status == "imprinted" then
+        self.grHandle = Data.Image.approvedDocument
+    end
+end
+
+-- ペナルティがあったフレームのみ 1 と返す
+function Paper:getPenalty()
+    self.returnValue = self.missFlag
+    self.missFlag = 0
+    return self.returnValue
+end
+
+-- スコアが入ったフレームだけスコアを返す
+function Paper:getStatus()
+    self.returnValue = 0
+    if self.correctFlag == 1 then
+        self.returnValue = SCORE_STAMPED_SCORE
+        self.correctFlag = 0
+    end
+
+    return self.returnValue
+end
+
+function Paper:setImprintStatus(index)
+    self.index.status = "inprinted"
+end
+
+-- 捺印する
+function Paper:stamp()
+    if(self.status == "imprinted")then
+        -- ミス
+        self.missFlag = 1
+        -- self:setStatus("plain")
+    else
+        -- 正しくハンコ押した
+        self.correctFlag = 1
+        self:setStatus("imprinted")
+    end
+end
+
+return Paper
