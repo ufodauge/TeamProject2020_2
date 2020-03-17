@@ -19,6 +19,12 @@ function Enemy:update(dt)
         self.stayInterval = 2
     end
 
+    if self.stayInterval > 0 then
+        self.collider:setCollisionClass('EnemyStucked')
+    else
+        self.collider:setCollisionClass('Enemy')
+    end
+
     local vx, vy = self.collider:getLinearVelocity()
     vx, vy = lume.vector(lume.angle(self.collider:getX(), self.collider:getY(), self.playerPosition.x, self.playerPosition.y), ENEMY_VELOCITY)
 

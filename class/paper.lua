@@ -25,13 +25,12 @@ local Paper = Instance:extend('Paper')
 
 Paper.score = 0
 
-
 function Paper:init()
     Paper.super:init(self)
-    self.status = "plain"
+    self.status = 'plain'
     self.grHandle = Data.Image.emptyDocument
-    self.missFlag = 0       -- ミスしたら１
-    self.correctFlag = 0    -- 正しくハンコを押したら１
+    self.missFlag = 0 -- ミスしたら１
+    self.correctFlag = 0 -- 正しくハンコを押したら１
 end
 
 function Paper:update(dt)
@@ -39,7 +38,7 @@ end
 
 function Paper:draw()
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.draw(self.grHandle, self.x, self.y,0,2,2)
+    love.graphics.draw(self.grHandle, self.x, self.y, 0, 2, 2)
 end
 
 function Paper:delete()
@@ -49,12 +48,16 @@ end
 function Paper:setStatus(status)
     self.status = status
 
-    if self.status == "plain" then
+    if self.status == 'plain' then
         self.grHandle = Data.Image.emptyDocument
     end
-    if self.status == "imprinted" then
+    if self.status == 'imprinted' then
         self.grHandle = Data.Image.approvedDocument
     end
+end
+
+function Paper:isImprinted()
+    return self.status == 'imprinted'
 end
 
 -- ペナルティがあったフレームのみ 1 と返す
@@ -76,19 +79,19 @@ function Paper:getStatus()
 end
 
 function Paper:setImprintStatus(index)
-    self.index.status = "inprinted"
+    self.index.status = 'inprinted'
 end
 
 -- 捺印する
 function Paper:stamp()
-    if(self.status == "imprinted")then
+    if (self.status == 'imprinted') then
+        -- self:setStatus("plain")
         -- ミス
         self.missFlag = 1
-        -- self:setStatus("plain")
     else
         -- 正しくハンコ押した
         self.correctFlag = 1
-        self:setStatus("imprinted")
+        self:setStatus('imprinted')
     end
 end
 

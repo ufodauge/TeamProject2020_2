@@ -30,13 +30,6 @@ function Obstacle:setPhysicsStatus(collision_class, collision_data, world)
     self.collider:setType('static')
     self.collider:setRestitution(0.3)
     self.collider:setCollisionClass(collision_class)
-
-    -- while self.collider:enter('Obstacle') do
-    --     self.collision_data[1] = Obstacle.RNG:random(OBSTACLE_AREA.LEFT, OBSTACLE_AREA.RIGHT)
-    --     self.collision_data[2] = Obstacle.RNG:random(OBSTACLE_AREA.TOP, OBSTACLE_AREA.BOTTOM)
-
-    --     self.collider:setCollisionClass(collision_class)
-    -- end
 end
 
 function Obstacle:setImage(imageData)

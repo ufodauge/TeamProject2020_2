@@ -8,12 +8,11 @@ function maingame:init()
 end
 
 function maingame:enter()
-    --[[
     background = {}
     background = Background()
-    background:setPosition(COUNTDOWN_X, COUNTDOWN_Y)
-    background:setImage(Data.Background.image)
-    ]]
+    background:setPosition(BACKGROUND_X, BACKGROUND_Y)
+    background:setImage(Data.Image.background)
+
     countdownTimer = CountdownTimer()
     countdownTimer:setPosition(COUNTDOWN_X, COUNTDOWN_Y)
     countdownTimer:setTime(COUNTDOWN_MAX_TIME)
@@ -54,6 +53,7 @@ function maingame:enter()
     world = Windfield.newWorld()
     world:addCollisionClass('Player')
     world:addCollisionClass('Enemy')
+    world:addCollisionClass('EnemyStucked', {ignores = {'Player'}})
     world:addCollisionClass('Food', {ignores = {'Enemy'}})
     world:addCollisionClass('Obstacle')
     world:addCollisionClass('Bean', {ignores = {'Player', 'Food'}})
@@ -111,19 +111,45 @@ function maingame:update(dt)
     stampedIndex = stampCursor:getStatus()
     if (stampedIndex ~= 0) then
         papers[stampedIndex]:stamp()
+
+        -- ハンコ1枚押して食べ物を出現させる場合の処理
+        foods[#foods + 1] = Food()
+        foods[#foods]:setPhysicsStatus('Food', FOOD_COLLISION_DATA, world)
+        foods[#foods]:setImage(Data.Image.food)
     end
 
     -- 物理空間の更新処理
     world:update(dt)
 
+    -- 鬼ごっこのペナルティの状況を監視
+    countdownTimer:setPenalty(player:getPenalty())
+
     -- 鬼の追っかける方向を取得
     enemy:setPlayerPosition(player:getPosition())
 
-    -- 食べ物
-    if Food.RNG:random() <= FOOD_APPEARANCE_RATE then
-        foods[#foods + 1] = Food()
-        foods[#foods]:setPhysicsStatus('Food', FOOD_COLLISION_DATA, world)
-        foods[#foods]:setImage(Data.Image.food)
+    -- -- 食べ物がランダムで出現する場合の処理
+    -- if Food.RNG:random() <= FOOD_APPEARANCE_RATE then
+    --     foods[#foods + 1] = Food()
+    --     foods[#foods]:setPhysicsStatus('Food', FOOD_COLLISION_DATA, world)
+    --     foods[#foods]:setImage(Data.Image.food)
+    -- end
+
+    -- 食べ物5個とった際に台紙を入れ替える処理
+    if player:isSatiety() then
+        local changedPapers = 0
+        local checkedPapers = 0
+
+        while changedPapers < 5 do
+            local rng = love.math.random(1, PAPER_TOTAL)
+            if papers[rng]:isImprinted() then
+                papers[rng]:setStatus('plain')
+                changedPapers = changedPapers + 1
+            end
+            checkedPapers = checkedPapers + 1
+            if checkedPapers >= PAPER_TOTAL then
+                break
+            end
+        end
     end
 
     if player:isLiterallyFired() then

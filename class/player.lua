@@ -4,18 +4,30 @@ function Player:init()
     Player.super:init(self)
 
     self.keys = KeyManager()
+    self.joysticks = JoystickManager()
 
     self.image = nil
     self.collider = nil
 
     self.isFired = false
+    self.penalty = 0
+    self.satiety = 0
 end
 
 function Player:update(dt)
     self.keys:update(dt)
+    self.joysticks:update(dt)
 
     local vx, vy = self.collider:getLinearVelocity()
     self.collider:setAngle(lume.angle(0, 0, vx, vy))
+
+    if self.collider:enter('Enemy') then
+        self.penalty = 1
+    end
+
+    if self.collider:enter('Food') then
+        self.satiety = self.satiety + 1
+    end
 end
 
 function Player:draw()
@@ -114,10 +126,81 @@ function Player:setPhysicsStatus(collision_class, collision_data, world)
             }
         }
     )
+    self.joysticks:register(
+        {
+            {
+                key = 'a',
+                func = function()
+                    self.isFired = true
+                end,
+                rep = false,
+                act = 'pressed'
+            },
+            {
+                key = 'b',
+                func = function()
+                    self.isFired = true
+                end,
+                rep = false,
+                act = 'pressed'
+            },
+            {
+                key = 'lefty',
+                func = function(axisValue)
+                    self.collider:applyForce(0, 4000 * axisValue)
+                end,
+                rep = true,
+                act = 'pressed'
+            },
+            {
+                key = 'lefty',
+                func = function(axisValue)
+                    local vx, vy = self.collider:getLinearVelocity()
+                    self.collider:setLinearVelocity(0, vy)
+                end,
+                rep = false,
+                act = 'pressed'
+            },
+            {
+                key = 'leftx',
+                func = function(axisValue)
+                    self.collider:applyForce(4000 * axisValue, 0)
+                end,
+                rep = true,
+                act = 'pressed'
+            },
+            {
+                key = 'leftx',
+                func = function(axisValue)
+                    local vx, vy = self.collider:getLinearVelocity()
+
+                    self.collider:setLinearVelocity(vx, 0)
+                end,
+                rep = false,
+                act = 'pressed'
+            }
+        }
+    )
 end
 
 function Player:setImage(imageData)
     self.image = imageData
+end
+
+function Player:isSatiety()
+    if self.satiety >= PLAYER_SATIETY_VALUE then
+        self.satiety = 0
+        return true
+    end
+    return false
+end
+
+function Player:getPenalty()
+    if self.penalty == 1 then
+        self.penalty = 0
+        return 1
+    end
+    return 0
 end
 
 function Player:getPosition()

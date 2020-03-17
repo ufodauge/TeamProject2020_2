@@ -1,7 +1,7 @@
 local Food = Instance:extend('Food')
 
 Food.RNG = love.math.newRandomGenerator()
-Food.RNG:setSeed(love.timer.getTime())
+Food.RNG:setSeed(love.timer.getTime() + 1)
 
 function Food:init()
     self.super:init(self)

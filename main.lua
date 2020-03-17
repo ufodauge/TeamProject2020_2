@@ -7,6 +7,8 @@ lume = require 'lume'
 Data = {}
 Data.Font = require 'data.font'
 Data.Image = require 'data.image'
+Data.Animation = {}
+Data.Animation.animationStamp = require 'data.animation.animationStamp'
 
 -- library
 Class = require '30log.30log'
@@ -34,6 +36,7 @@ JoystickManager = require 'class.joystickManager'
 AnimationManager = require 'class.animationManager'
 
 SampleTimer = require 'class.sampletimer'
+AnimationTest = require 'class.animationTest'
 
 CountdownTimer = require 'class.countdowntimer'
 Background = require 'class.Background'
