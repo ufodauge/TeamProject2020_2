@@ -110,7 +110,7 @@ function maingame:enter()
     -- enemy
     enemy = Enemy()
     enemy:setPhysicsStatus('Enemy', ENEMY_COLLISION_DATA, world)
-    enemy:setImage(Data.Image.ogre)
+    -- enemy:setImage(Data.Image.ogre)
     enemy:setPlayerPosition(player:getPosition())
 
     -- food
