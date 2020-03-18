@@ -26,6 +26,12 @@ function ranking:enter()
     str = love.filesystem.read(love.filesystem.getIdentity())
     scoreValues = lume.split(str, ',')
 
+    for i = 1, RANKING_MAX do
+        if scoreValues[i] == nil or scoreValues[i] == '' then
+            scoreValues[i] = 0
+        end
+    end
+
     bigLabel = {
         x = 512,
         y = 386,
@@ -73,15 +79,15 @@ function ranking:enter()
     }
 
     back.cnt = 0
-    flux.to(bigLabel, 0.5, {y = 30 + 64, sx = 20}):ease('expoinout')
-    flux.to(bigLabel, 0.5, {sy = 2}):ease('elasticout')
-    flux.to(scores, 0.5, {x1 = 512, x2 = 512}):ease('expoinout')
-    flux.to(back, 0.5, {y = 460 + 32}):ease('expoinout')
-    flux.to(start, 0.5, {x = -150}):ease('expoinout')
-    flux.to(setting, 0.5, {x = 1024 + 150}):ease('expoinout')
-    flux.to(hanko, 0.5, {x = -150}):ease('expoinout')
-    flux.to(onigo, 0.5, {x = 1024 + 150}):ease('expoinout')
-    flux.to(cursor, 0.5, {x = 750 + 16 * 7, y = 460 + 32}):ease('expoinout')
+    flux.to(bigLabel, EASE_TIME, {y = 30 + 64, sx = 20}):ease('expoinout')
+    flux.to(bigLabel, EASE_TIME, {sy = 2}):ease('elasticout')
+    flux.to(scores, EASE_TIME, {x1 = 512, x2 = 512}):ease('expoinout')
+    flux.to(back, EASE_TIME, {y = 460 + 32}):ease('expoinout')
+    flux.to(start, EASE_TIME, {x = -150}):ease('expoinout')
+    flux.to(setting, EASE_TIME, {x = 1024 + 150}):ease('expoinout')
+    flux.to(hanko, EASE_TIME, {x = -150}):ease('expoinout')
+    flux.to(onigo, EASE_TIME, {x = 1024 + 150}):ease('expoinout')
+    flux.to(cursor, EASE_TIME, {x = 750 + 16 * 7, y = 460 + 32}):ease('expoinout')
 end
 
 function ranking:update(dt)
@@ -90,7 +96,7 @@ function ranking:update(dt)
 
     if back.cnt > 1 then
         back.cnt = back.cnt + 1
-        if back.cnt > 30 then
+        if back.cnt > EASE_TIME * 60 then
             State.switch(States.Title)
         end
     end
@@ -123,17 +129,17 @@ end
 function ranking:pressZ()
     back.cnt = back.cnt + 1
     if back.cnt == 2 then
-        flux.to(bigLabel, 0.5, {y = 386, sx = 20, sy = 1}):ease('expoinout')
-        flux.to(back, 0.3, {scale = 1.3}):ease('elasticout')
-        flux.to(back, 0.12, {scale = 0}):ease('circin'):delay(0.3)
-        flux.to(cursor, 0.5, {x = 512, y = 386}):ease('expoinout')
+        flux.to(bigLabel, EASE_TIME, {y = 386, sx = 20, sy = 1}):ease('expoinout')
+        flux.to(back, EASE_TIME * 0.6, {scale = 1.3}):ease('elasticout')
+        flux.to(back, EASE_TIME * 0.4, {scale = 0}):ease('circin'):delay(EASE_TIME * 0.6)
+        flux.to(cursor, EASE_TIME, {x = 512, y = 386}):ease('expoinout')
         cursor.label = '>         <'
-        flux.to(start, 0.5, {x = 512}):ease('expoinout')
-        flux.to(setting, 0.5, {x = 512}):ease('expoinout')
-        flux.to(hanko, 0.5, {x = 512}):ease('expoinout')
-        flux.to(onigo, 0.5, {x = 512}):ease('expoinout')
+        flux.to(start, EASE_TIME, {x = 512}):ease('expoinout')
+        flux.to(setting, EASE_TIME, {x = 512}):ease('expoinout')
+        flux.to(hanko, EASE_TIME, {x = 512}):ease('expoinout')
+        flux.to(onigo, EASE_TIME, {x = 512}):ease('expoinout')
 
-        flux.to(scores, 0.5, {x1 = 1024 + 200, x2 = -200}):ease('expoinout')
+        flux.to(scores, EASE_TIME, {x1 = 1024 + 200, x2 = -200}):ease('expoinout')
     end
 end
 

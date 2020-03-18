@@ -34,6 +34,7 @@ States.Sandbox = require 'state.sandbox'
 States.Maingame = require 'state.maingame'
 States.Title = require 'state.title'
 States.Ranking = require 'state.ranking'
+States.Setting = require 'state.setting'
 States.Gameover = require 'state.gameover'
 
 -- Debug
@@ -67,7 +68,7 @@ Wall = require 'class.wall'
 
 function love.load()
     -- デバッグモードの有効化の際は true を渡すこと
-    debug = Debug(true)
+    debug = Debug(false)
 
     State.registerEvents()
     State.switch(States.Title)

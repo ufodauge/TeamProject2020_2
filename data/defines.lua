@@ -66,3 +66,9 @@ Const.define('WALL_COLLISION_DATA_1', {512, 0, 5, 576})
 Const.define('WALL_COLLISION_DATA_2', {512, 571, 512, 5})
 Const.define('WALL_COLLISION_DATA_3', {1019, 0, 5, 576})
 Const.define('WALL_COLLISION_DATA_4', {512, 0, 512, 5})
+
+-- title
+Const.define('EASE_TIME', 0.6)
+
+-- title
+Const.define('RANKING_MAX', 5)
