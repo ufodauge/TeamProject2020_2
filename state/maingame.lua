@@ -2,6 +2,19 @@ local maingame = {}
 
 maingame.name = 'maingame'
 
+local background = nil
+local countdownTimer = nil
+local score = nil
+local papers = nil
+local stampCursor = nil
+local world = nil
+local player = nil
+local enemy = nil
+local obstacles = nil
+local foods = nil
+local beans = nil
+local walls = nil
+
 function maingame:init()
     -- 乱数シードの設定
     love.math.setRandomSeed(love.timer.getTime())

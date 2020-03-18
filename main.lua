@@ -46,6 +46,7 @@ CountdownTimer = require 'class.countdowntimer'
 Background = require 'class.Background'
 Blackout = require 'class.Blackout'
 Gameover = require 'class.Gameover'
+Text = require 'class.Text'
 
 Score = require 'class.score'
 Paper = require 'class.paper'
