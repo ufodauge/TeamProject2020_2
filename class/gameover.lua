@@ -45,8 +45,8 @@ function Gameover:init()
                 1,
                 function()
                     blackout:delete()
-                    -- State.switch(maingame)
-                    love.event.quit(0)
+                    State.pop()
+                    State.switch(States.Title)
                 end
             )
         end

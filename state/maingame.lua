@@ -197,8 +197,36 @@ function maingame:update(dt)
 
     -- カウント終了時の処理
     if countdownTimer:isOver() then
-        print(love.filesystem.append(love.filesystem.getIdentity(), tostring(score:getScore()) .. ','))
-        print(love.filesystem.read('string', love.filesystem.getIdentity()))
+        love.filesystem.append(love.filesystem.getIdentity(), tostring(score:getScore()) .. ',')
+        print(love.filesystem.read(love.filesystem.getIdentity()))
+
+        local str = love.filesystem.read(love.filesystem.getIdentity())
+        local scoreValues = lume.split(str, ',')
+        scoreValues =
+            lume.reject(
+            scoreValues,
+            function(a)
+                return a == ''
+            end
+        )
+        for i = 1, #scoreValues do
+            scoreValues[i] = tonumber(scoreValues[i])
+        end
+        scoreValues =
+            lume.sort(
+            scoreValues,
+            function(a, b)
+                return a > b
+            end
+        )
+        scoreValues = lume.slice(scoreValues, 1, 50)
+
+        love.filesystem.write(love.filesystem.getIdentity(), '')
+        for i, eachscore in ipairs(scoreValues) do
+            love.filesystem.append(love.filesystem.getIdentity(), tostring(eachscore) .. ',')
+        end
+        print(love.filesystem.read(love.filesystem.getIdentity()))
+
         State.push(States.Gameover, score:getScore())
     end
 end

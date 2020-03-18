@@ -53,9 +53,8 @@ function gameoverState:leave()
     self.from.audio:stop()
     blackout:delete()
     gameover:delete()
-    for i, text in ipairs(texts) do
-        text:delete()
-    end
+    texts.score:delete()
+    texts.AorB:delete()
 end
 
 return gameoverState
