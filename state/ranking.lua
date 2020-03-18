@@ -86,9 +86,9 @@ function ranking:enter()
 
     for i=1, #scores.x do
         if i ~= 5 then
-            flux.to(scores.x,EASE_TIME,{[6-i]=512}):ease("expoinout"):delay((i)*0.15)
+            flux.to(scores.x,EASE_TIME,{[6-i]=512}):ease("expoinout"):delay((i)*0.12)
         else
-            flux.to(scores.x,EASE_TIME*1.5,{[6-i]=512}):ease("expoinout"):delay((i)*0.15)
+            flux.to(scores.x,EASE_TIME,{[6-i]=512}):ease("expoinout"):delay((i)*0.12+0.15)
         end
     end
 
@@ -143,18 +143,6 @@ function ranking:draw()
     self:printCenter(Data.Font.title,Data.Font.size.title,"START", start.x, start.y,1)
     self:printCenter(Data.Font.title,Data.Font.size.title,"SETTING", setting.x, setting.y,1)
 
-    self:printCenter(Data.Font.title, Data.Font.size.title, 'RANKING', bigLabel.x, bigLabel.y, bigLabel.sy)
-    self:printCenter(Data.Font.title, Data.Font.size.title, '1st ' .. scoreValues[1] .. 'pt', scores.x1, 180 + 32, 1)
-    self:printCenter(Data.Font.title, Data.Font.size.title, '2nd ' .. scoreValues[2] .. 'pt', scores.x2, 250 + 32, 1)
-    self:printCenter(Data.Font.title, Data.Font.size.title, '3rt ' .. scoreValues[3] .. 'pt', scores.x1, 320 + 32, 1)
-    self:printCenter(Data.Font.title, Data.Font.size.title, '4th ' .. scoreValues[4] .. 'pt', scores.x2, 390 + 32, 1)
-    self:printCenter(Data.Font.title, Data.Font.size.title, '5th ' .. scoreValues[5] .. 'pt', scores.x1, 460 + 32, 1)
-
-    self:printCenter(Data.Font.title, Data.Font.size.title, cursor.label, cursor.x, cursor.y, 1)
-    self:printCenter(Data.Font.title, Data.Font.size.title, back.moji, back.x, back.y, back.scale)
-
-    self:printCenter(Data.Font.title, Data.Font.size.title, 'START', start.x, start.y, 1)
-    self:printCenter(Data.Font.title, Data.Font.size.title, 'SETTING', setting.x, setting.y, 1)
 end
 
 function ranking:leave()
