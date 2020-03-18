@@ -19,6 +19,7 @@ State = require 'hump.gamestate'
 Timer = require 'hump.timer'
 Windfield = require 'windfield'
 Const = require 'const.const'
+flux = require "flux"
 
 -- defines
 require 'data.defines'
@@ -29,6 +30,8 @@ States.Dummy = require 'state.dummy'
 States.Sandbox = require 'state.sandbox'
 States.Maingame = require 'state.maingame'
 States.Title = require 'state.title'
+States.Ranking = require 'state.ranking'
+States.Gameover = require 'state.gameover'
 
 -- Debug
 Debug = require 'class.debug.debug'

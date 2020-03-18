@@ -24,6 +24,8 @@ function StampCursor:init()
     self.positionOnPaperY = math.floor((self.paperRow - 1) / 2)
     self.onPaperIndex = 0
 
+    self.moveFlag = false
+
     self.isJoystickReleased = {x = true, y = true}
 
     self.keyManager = KeyManager()
@@ -170,6 +172,11 @@ function StampCursor:update(dt)
     self.keyManager:update(dt)
     self.joystickManager:update(dt)
     self.animationManager:update(dt)
+    flux.update(dt)
+    if self.moveFlag == true then
+        flux.to(self,0.2,{x = PAPER_X + PAPER_WIDTH * self.positionOnPaperX,y = PAPER_Y + PAPER_HEIGHT * self.positionOnPaperY}):ease("expoout")
+        self.moveFlag = false
+    end
 end
 
 function StampCursor:draw()
@@ -202,8 +209,10 @@ function StampCursor:move(dx, dy)
             self.positionOnPaperX = self.positionOnPaperX + dx
             self.positionOnPaperY = self.positionOnPaperY + dy
 
-            self.x = PAPER_X + PAPER_WIDTH * self.positionOnPaperX
-            self.y = PAPER_Y + PAPER_HEIGHT * self.positionOnPaperY
+            --self.x = PAPER_X + PAPER_WIDTH * self.positionOnPaperX
+            --self.y = PAPER_Y + PAPER_HEIGHT * self.positionOnPaperY
+            self.moveFlag = true
+            --flux.to(self,0.2,{x = PAPER_X + PAPER_WIDTH * self.positionOnPaperX,y = PAPER_Y + PAPER_HEIGHT * self.positionOnPaperY}):ease("expoout")
         end
     end
 end
