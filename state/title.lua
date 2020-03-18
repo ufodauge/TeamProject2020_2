@@ -115,15 +115,18 @@ function title:pressZ()
     if self.cursorY == 0 then
         self.pressZWaiting = 1
         flux.to(start,0.5,{scale = 1.5}):ease("elasticout")
-        flux.to(hanko,0.8,{x=-200}):ease("expoinout")
-        flux.to(onigo,0.8,{x=1024+200}):ease("expoinout")
-        flux.to(ranking,0.8,{x=-200}):ease("expoinout")
-        flux.to(setting,0.8,{x=1024+200}):ease("expoinout")
+        flux.to(hanko,0.5,{x=-200}):ease("expoin")
+        flux.to(onigo,0.5,{x=1024+200}):ease("expoin")
+        flux.to(ranking,0.5,{x=-200}):ease("expoin")
+        flux.to(setting,0.5,{x=1024+200}):ease("expoin")
         
         --State.switch(States.Maingame)
     end
     if self.cursorY == 1 then
         State.switch(States.Ranking)
+    end
+    if self.cursorY == 2 then
+        State.switch(States.Setting)
     end
 end
 

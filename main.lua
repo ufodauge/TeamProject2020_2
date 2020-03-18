@@ -31,6 +31,7 @@ States.Sandbox = require 'state.sandbox'
 States.Maingame = require 'state.maingame'
 States.Title = require 'state.title'
 States.Ranking = require 'state.ranking'
+States.Setting = require 'state.setting'
 States.Gameover = require 'state.gameover'
 
 -- Debug
