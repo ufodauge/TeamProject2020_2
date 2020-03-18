@@ -24,24 +24,28 @@ Const.define('PAPER_COLUMN', 6)
 Const.define('PAPER_IMPRINTED_RATE', 0.25)
 
 -- player
-Const.define('PLAYER_COLLISION_DATA', {600, 300, 16})
+Const.define('PLAYER_COLLISION_DATA', {600, 300, 14})
 Const.define('PLAYER_FORCE', 6000)
+Const.define('PLAYER_SIZE', {16, 16})
 Const.define('PLAYER_SATIETY_VALUE', 5)
 
 -- enemy
-Const.define('ENEMY_COLLISION_DATA', {900, 300, 16})
+Const.define('ENEMY_COLLISION_DATA', {900, 300, 14})
 Const.define('ENEMY_VELOCITY', 160)
+Const.define('ENEMY_SIZE', {16, 16})
 
 -- food
-Const.define('FOOD_COLLISION_DATA', {512, 0, 16})
+Const.define('FOOD_COLLISION_DATA', {512, 0, 14})
 Const.define('FOOD_APPEARANCE_RATE', 0.005)
+Const.define('FOOD_SIZE', {16, 16})
 
 -- obstacle
-Const.define('OBSTACLE_COLLISION_DATA', {512, 0, 16})
+Const.define('OBSTACLE_COLLISION_DATA', {512, 0, 14})
 Const.define('OBSTACLE_MAX', 7)
 Const.define('OBSTACLE_STUB_RATE', 0.5)
 Const.define('OBSTACLE_AREA', {LEFT = 572, RIGHT = 964, TOP = 60, BOTTOM = 516})
 Const.define('OBSTACLE_DISTACNE_MIN', 80)
+Const.define('OBSTACLE_SIZE', {16, 16})
 
 -- bean
 Const.define('BEAN_COLLISION_DATA', {512, 0, 4})

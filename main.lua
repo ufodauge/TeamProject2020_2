@@ -19,6 +19,7 @@ State = require 'hump.gamestate'
 Timer = require 'hump.timer'
 Windfield = require 'windfield'
 Const = require 'const.const'
+flux = require 'flux'
 
 -- defines
 require 'data.defines'

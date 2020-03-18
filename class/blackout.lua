@@ -10,11 +10,12 @@
 ]]
 local Blackout = Instance:extend('Blackout')
 
-function Blackout:init()
+function Blackout:init(opacity)
+    opacity = opacity or 0.5
     Blackout.super:init(self)
 
     self.color = {1, 1, 1, 0}
-    Timer.tween(1, self.color, {1, 1, 1, 0.5}, 'in-out-quad')
+    Timer.tween(1, self.color, {1, 1, 1, opacity}, 'in-out-quad')
 end
 
 function Blackout:update(dt)

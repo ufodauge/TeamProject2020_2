@@ -126,7 +126,7 @@ function maingame:update(dt)
         papers[stampedIndex]:stamp()
 
         -- ハンコ1枚押して食べ物を出現させる場合の処理
-        if Paper:getPenalty() ~= 1 then
+        if Paper:getPenalty() ~= 1 and not papers[stampedIndex]:isImprinted() then
             foods[#foods + 1] = Food()
             foods[#foods]:setPhysicsStatus('Food', FOOD_COLLISION_DATA, world)
             foods[#foods]:setImage(Data.Image.food)
@@ -177,13 +177,13 @@ function maingame:update(dt)
 
     -- カウント終了時の処理
     if countdownTimer:isOver() then
-        State.push(States.Gameover)
+        State.push(States.Gameover, score:getScore())
     end
 end
 
 function maingame:draw()
     -- for debugging
-    world:draw(0.3)
+    -- world:draw(0.3)
 end
 
 function maingame:leave()

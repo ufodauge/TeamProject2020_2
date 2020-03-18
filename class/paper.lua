@@ -31,6 +31,8 @@ function Paper:init()
     self.grHandle = Data.Image.emptyDocument
     self.missFlag = 0 -- ミスしたら１
     self.correctFlag = 0 -- 正しくハンコを押したら１
+
+    self.changed = false
 end
 
 function Paper:update(dt)
@@ -84,14 +86,21 @@ function Paper:setImprintStatus(index)
     self.index.status = 'inprinted'
 end
 
+function Paper:isImprinted()
+    return not self.changed
+end
+
 -- 捺印する
 function Paper:stamp()
+    self.changed = false
     if (self.status == 'imprinted') then
         -- self:setStatus("plain")
         -- ミス
+        self.changed = false
         self.missFlag = 1
     else
         -- 正しくハンコ押した
+        self.changed = true
         self.correctFlag = 1
         self:setStatus('imprinted')
     end

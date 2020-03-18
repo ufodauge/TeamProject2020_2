@@ -39,8 +39,8 @@ end
 function Enemy:draw()
     love.graphics.setColor(1, 1, 1, 1)
     self.x, self.y = self.collider:getPosition()
-    self.x = self.x - self.collision_data[3]
-    self.y = self.y - self.collision_data[3]
+    self.x = self.x - ENEMY_SIZE[1]
+    self.y = self.y - ENEMY_SIZE[2]
     love.graphics.draw(self.image, self.x, self.y)
 end
 
@@ -60,6 +60,7 @@ end
 
 function Enemy:setImage(imageData)
     self.image = imageData
+    self.image:setFilter('nearest')
 end
 
 function Enemy:delete()
