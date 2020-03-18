@@ -35,7 +35,8 @@ function ranking:enter()
 
     scores = {
         x1 = -200,
-        x2 = 1024+200
+        x2 = 1024+200,
+        x = {-200,1024+200,-200,1024+200,-200}
     }
 
     back = {
@@ -74,8 +75,17 @@ function ranking:enter()
     
     back.cnt = 0
     flux.to(bigLabel,EASE_TIME,{y=30+64,sx = 20}):ease("expoinout")
-    flux.to(bigLabel,EASE_TIME,{sy=2}):ease("elasticout")
+    flux.to(bigLabel,EASE_TIME*0.8,{sy=2}):ease("elasticout")
     flux.to(scores,EASE_TIME,{x1 = 512, x2 = 512}):ease("expoinout")
+
+    for i=1, #scores.x do
+        if i ~= 5 then
+            flux.to(scores.x,EASE_TIME,{[6-i]=512}):ease("expoinout"):delay((i)*0.15)
+        else
+            flux.to(scores.x,EASE_TIME*1.5,{[6-i]=512}):ease("expoinout"):delay((i)*0.15)
+        end
+    end
+
     flux.to(back,EASE_TIME,{y = 460+32}):ease("expoinout")
     flux.to(start,EASE_TIME,{x = -150}):ease("expoinout")
     flux.to(setting,EASE_TIME,{x = 1024+150}):ease("expoinout")
@@ -105,11 +115,11 @@ function ranking:draw()
     self:printCenter(Data.Font.veryBig,Data.Font.size.veryBig,"      ONIGO", onigo.x, onigo.y,1)
     
     self:printCenter(Data.Font.title,Data.Font.size.title,"RANKING", bigLabel.x, bigLabel.y,bigLabel.sy)
-    self:printCenter(Data.Font.title,Data.Font.size.title,"1st "..scoreValues[1].."pt", scores.x1, 180+32,1)
-    self:printCenter(Data.Font.title,Data.Font.size.title,"2nd "..scoreValues[2].."pt", scores.x2, 250+32,1)
-    self:printCenter(Data.Font.title,Data.Font.size.title,"3rt "..scoreValues[3].."pt", scores.x1, 320+32,1)
-    self:printCenter(Data.Font.title,Data.Font.size.title,"4th "..scoreValues[4].."pt", scores.x2, 390+32,1)
-    self:printCenter(Data.Font.title,Data.Font.size.title,"5th "..scoreValues[5].."pt", scores.x1, 460+32,1)
+    self:printCenter(Data.Font.title,Data.Font.size.title,"1st "..scoreValues[1].."pt", scores.x[1], 180+32,1)
+    self:printCenter(Data.Font.title,Data.Font.size.title,"2nd "..scoreValues[2].."pt", scores.x[2], 250+32,1)
+    self:printCenter(Data.Font.title,Data.Font.size.title,"3rt "..scoreValues[3].."pt", scores.x[3], 320+32,1)
+    self:printCenter(Data.Font.title,Data.Font.size.title,"4th "..scoreValues[4].."pt", scores.x[4], 390+32,1)
+    self:printCenter(Data.Font.title,Data.Font.size.title,"5th "..scoreValues[5].."pt", scores.x[5], 460+32,1)
 
     self:printCenter(Data.Font.title,Data.Font.size.title,cursor.label, cursor.x, cursor.y,1)
     self:printCenter(Data.Font.title,Data.Font.size.title,back.moji, back.x, back.y,back.scale)
@@ -126,8 +136,8 @@ function ranking:pressZ()
     back.cnt = back.cnt + 1
     if back.cnt == 2 then
         flux.to(bigLabel,EASE_TIME,{y=386,sx = 20,sy=1}):ease("expoinout")
-        flux.to(back,EASE_TIME*0.6,{scale = 1.3}):ease("elasticout")
-        flux.to(back,EASE_TIME*0.4,{scale = 0}):ease("circin"):delay(EASE_TIME*0.6)
+        flux.to(back,EASE_TIME*0.4,{scale = 1.3}):ease("elasticout")
+        flux.to(back,EASE_TIME*0.3,{scale = 0}):ease("circin"):delay(EASE_TIME*0.4)
         flux.to(cursor,EASE_TIME,{x=512,y=386}):ease("expoinout")
         cursor.label=">         <"
         flux.to(start,EASE_TIME,{x = 512}):ease("expoinout")
@@ -135,8 +145,10 @@ function ranking:pressZ()
         flux.to(hanko,EASE_TIME,{x = 512}):ease("expoinout")
         flux.to(onigo,EASE_TIME,{x = 512}):ease("expoinout")
     
-        flux.to(scores,EASE_TIME,{x1 = 1024+200, x2 = -200}):ease("expoinout")
-    end
+        for i=1, #scores.x do
+            flux.to(scores.x,EASE_TIME*0.8,{[i]=1024+200-(1024+400)*(i % 2)}):ease("expoinout"):delay((i)*0.03)
+        end
+        end
 end
 
 

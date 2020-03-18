@@ -84,7 +84,7 @@ function setting:enter()
     
     back.cnt = 0
     flux.to(setting,EASE_TIME,{y=30+64}):ease("expoinout")
-    flux.to(setting,EASE_TIME,{scale=2}):ease("elasticout")
+    flux.to(setting,EASE_TIME*0.8,{scale=2}):ease("elasticout")
     --flux.to(scores,EASE_TIME,{x1 = 512, x2 = 512}):ease("expoinout")
     flux.to(back,EASE_TIME,{y = 460+32}):ease("expoinout")
     flux.to(start,EASE_TIME,{x = -150}):ease("expoinout")
@@ -141,8 +141,8 @@ function setting:pressZ()
     back.cnt = back.cnt + 1
     if back.cnt == 2 then
         flux.to(ranking,EASE_TIME,{x=512}):ease("expoinout")
-        flux.to(back,EASE_TIME*0.6,{scale = 1.3}):ease("elasticout")
-        flux.to(back,EASE_TIME*0.4,{scale = 0}):ease("circin"):delay(EASE_TIME*0.6)
+        flux.to(back,EASE_TIME*0.4,{scale = 1.3}):ease("elasticout")
+        flux.to(back,EASE_TIME*0.3,{scale = 0}):ease("circin"):delay(EASE_TIME*0.4)
         flux.to(cursor,EASE_TIME,{x=512,y=386+70}):ease("expoinout")
         cursor.label=">         <"
         flux.to(start,EASE_TIME,{x = 512}):ease("expoinout")

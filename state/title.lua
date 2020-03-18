@@ -84,7 +84,7 @@ function title:update(dt)
         if self.pressZWaiting % 30 > 15 then
             self.cursorChar = ">         <"
         else
-            self.cursorChar = ">        <"
+            self.cursorChar = ">          <"
         end
 
         if self.pressZWaiting >= 90 then
