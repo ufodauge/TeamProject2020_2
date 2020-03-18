@@ -34,15 +34,20 @@ function Enemy:update(dt)
     local vx, vy = self.collider:getLinearVelocity()
     vx, vy = lume.vector(lume.angle(self.collider:getX(), self.collider:getY(), self.playerPosition.x, self.playerPosition.y), ENEMY_VELOCITY)
 
-    if vx >= 0 then
-        self.animationManager:setTile(ENEMY_ANIMATION_RIGHT)
-    else
-        self.animationManager:setTile(ENEMY_ANIMATION_LEFT)
+    if math.abs(vy) <= math.abs(vx) then
+        if vx >= 0 then
+            self.animationManager:setTile(ENEMY_ANIMATION_LEFT)
+        else
+            self.animationManager:setTile(ENEMY_ANIMATION_RIGHT)
+        end
     end
-    if vy >= 0 then
-        self.animationManager:setTile(ENEMY_ANIMATION_FRONT)
-    else
-        self.animationManager:setTile(ENEMY_ANIMATION_BACK)
+
+    if math.abs(vy) >= math.abs(vx) then
+        if vy >= 0 then
+            self.animationManager:setTile(ENEMY_ANIMATION_FRONT)
+        else
+            self.animationManager:setTile(ENEMY_ANIMATION_BACK)
+        end
     end
 
     if self.stayInterval > 0 then
