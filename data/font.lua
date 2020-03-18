@@ -3,7 +3,7 @@ local font = {}
 font.size = {
     debug = 16,
     title = 64,
-    veryBig = 128
+    veryBig = 128,
     middle = 32
 }
 
