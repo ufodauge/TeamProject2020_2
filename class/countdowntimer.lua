@@ -47,7 +47,7 @@ function CountdownTimer:update(dt)
 end
 
 function CountdownTimer:draw()
-    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.setColor(0, 0, 0, 1)
 
     love.graphics.print('TIME: ' .. self:getText(), self.x, self.y)
 

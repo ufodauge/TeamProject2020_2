@@ -33,6 +33,7 @@ function StampCursor:init()
                 key = 'z',
                 func = function()
                     self.onPaperIndex = self:getIndex(self.positionOnPaperX, self.positionOnPaperY)
+                    self.animationManager:play()
                 end,
                 rep = false,
                 act = 'pressed'
@@ -79,6 +80,7 @@ function StampCursor:init()
                 key = 'a',
                 func = function()
                     self.onPaperIndex = self:getIndex(self.positionOnPaperX, self.positionOnPaperY)
+                    self.animationManager:play()
                 end,
                 rep = false,
                 act = 'pressed'
@@ -87,6 +89,7 @@ function StampCursor:init()
                 key = 'b',
                 func = function()
                     self.onPaperIndex = self:getIndex(self.positionOnPaperX, self.positionOnPaperY)
+                    self.animationManager:play()
                 end,
                 rep = false,
                 act = 'pressed'
@@ -155,16 +158,26 @@ function StampCursor:init()
             }
         }
     )
+
+    self.image = Data.Image.highlight
+    self.image:setFilter('nearest')
+    self.animationManager = AnimationManager()
+    self.animationManager:setTilesets(Data.Animation.animationStamp)
+    self.animationManager:setPermanence(false)
 end
 
 function StampCursor:update(dt)
     self.keyManager:update(dt)
     self.joystickManager:update(dt)
+    self.animationManager:update(dt)
 end
 
 function StampCursor:draw()
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.draw(Data.Image.stamp, self.x, self.y, 0, 2, 2)
+
+    love.graphics.draw(self.image, self.x, self.y, 0, 2, 2)
+    self.animationManager:draw(self.x, self.y, 0, 2, 2)
+
     -- love.graphics.print("StampPosOnPaper(" .. self.positionOnPaperX .. ", " .. self.positionOnPaperY .. ")"..self:getIndex(self.positionOnPaperX,self.positionOnPaperY),20,520)
 end
 

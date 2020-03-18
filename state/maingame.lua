@@ -2,6 +2,19 @@ local maingame = {}
 
 maingame.name = 'maingame'
 
+local background = nil
+local countdownTimer = nil
+local score = nil
+local papers = nil
+local stampCursor = nil
+local world = nil
+local player = nil
+local enemy = nil
+local obstacles = nil
+local foods = nil
+local beans = nil
+local walls = nil
+
 function maingame:init()
     -- 乱数シードの設定
     love.math.setRandomSeed(love.timer.getTime())
@@ -113,9 +126,11 @@ function maingame:update(dt)
         papers[stampedIndex]:stamp()
 
         -- ハンコ1枚押して食べ物を出現させる場合の処理
-        foods[#foods + 1] = Food()
-        foods[#foods]:setPhysicsStatus('Food', FOOD_COLLISION_DATA, world)
-        foods[#foods]:setImage(Data.Image.food)
+        if Paper:getPenalty() ~= 1 then
+            foods[#foods + 1] = Food()
+            foods[#foods]:setPhysicsStatus('Food', FOOD_COLLISION_DATA, world)
+            foods[#foods]:setImage(Data.Image.food)
+        end
     end
 
     -- 物理空間の更新処理
@@ -157,11 +172,12 @@ function maingame:update(dt)
         beans:setPosition(player:getPosition())
         beans:setAngle(player:getAngle())
         beans:setPhysicsStatus('Bean', BEAN_COLLISION_DATA, world)
+        beans:setImage(Data.Image.bean, 0.25)
     end
 
     -- カウント終了時の処理
     if countdownTimer:isOver() then
-    -- State.push(Pause)
+        State.push(States.Gameover)
     end
 end
 

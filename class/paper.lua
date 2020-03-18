@@ -54,6 +54,8 @@ function Paper:setStatus(status)
     if self.status == 'imprinted' then
         self.grHandle = Data.Image.approvedDocument
     end
+
+    self.grHandle:setFilter('nearest')
 end
 
 function Paper:isImprinted()

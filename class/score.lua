@@ -20,9 +20,8 @@ function Score:update(dt)
 end
 
 function Score:draw()
-    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.setColor(0, 0, 0, 1)
     love.graphics.print('SCORE: ' .. self.score, self.x, self.y)
-
 end
 
 function Score:delete()

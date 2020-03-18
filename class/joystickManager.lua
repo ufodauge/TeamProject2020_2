@@ -78,6 +78,11 @@ function JoystickManager:register(properties)
 end
 
 function JoystickManager:update(dt)
+    -- 未接続時は更新処理をしない
+    if JoystickManager.joysticks[1] == nil then
+        return
+    end
+
     for k, keys in pairs(self.inputs_table) do
         -- judge Buttons or Axis
         if isKeyTypeButton(keys.button) then

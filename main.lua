@@ -7,13 +7,16 @@ lume = require 'lume'
 Data = {}
 Data.Font = require 'data.font'
 Data.Image = require 'data.image'
+
 Data.Animation = {}
 Data.Animation.animationStamp = require 'data.animation.animationStamp'
+Data.Animation.gameover = require 'data.animation.gameover'
 
 -- library
 Class = require '30log.30log'
 Camera = require 'hump.camera'
 State = require 'hump.gamestate'
+Timer = require 'hump.timer'
 Windfield = require 'windfield'
 Const = require 'const.const'
 
@@ -41,6 +44,9 @@ AnimationTest = require 'class.animationTest'
 
 CountdownTimer = require 'class.countdowntimer'
 Background = require 'class.Background'
+Blackout = require 'class.Blackout'
+Gameover = require 'class.Gameover'
+Text = require 'class.Text'
 
 Score = require 'class.score'
 Paper = require 'class.paper'
@@ -69,6 +75,7 @@ function love.update(dt)
     --debug
 
     Instance:update(dt)
+    Timer.update(dt)
 end
 
 function love.draw()

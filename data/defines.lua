@@ -17,8 +17,8 @@ Const.define('SCORE_STAMPED_SCORE', 200)
 -- paper
 Const.define('PAPER_X', 32) -- 左上に配置する紙を前提とする
 Const.define('PAPER_Y', 32) -- 同上
-Const.define('PAPER_WIDTH', 76)
-Const.define('PAPER_HEIGHT', 76)
+Const.define('PAPER_WIDTH', 64)
+Const.define('PAPER_HEIGHT', 64)
 Const.define('PAPER_TOTAL', 36)
 Const.define('PAPER_COLUMN', 6)
 Const.define('PAPER_IMPRINTED_RATE', 0.25)
@@ -41,6 +41,7 @@ Const.define('OBSTACLE_COLLISION_DATA', {512, 0, 16})
 Const.define('OBSTACLE_MAX', 7)
 Const.define('OBSTACLE_STUB_RATE', 0.5)
 Const.define('OBSTACLE_AREA', {LEFT = 572, RIGHT = 964, TOP = 60, BOTTOM = 516})
+Const.define('OBSTACLE_DISTACNE_MIN', 80)
 
 -- bean
 Const.define('BEAN_COLLISION_DATA', {512, 0, 4})
