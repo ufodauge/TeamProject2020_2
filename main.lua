@@ -7,10 +7,12 @@ lume = require 'lume'
 Data = {}
 Data.Font = require 'data.font'
 Data.Image = require 'data.image'
+Data.Audio = require 'data.audio'
 
 Data.Animation = {}
 Data.Animation.animationStamp = require 'data.animation.animationStamp'
 Data.Animation.gameover = require 'data.animation.gameover'
+Data.Animation.player = require 'data.animation.player'
 
 -- library
 Class = require '30log.30log'

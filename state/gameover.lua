@@ -14,6 +14,8 @@ end
 function gameoverState:enter(from, score)
     self.from = from
 
+    Tween(3, self.from.tween.audio, {pitch = 0.5, volume = 0}, 'in-linear')
+
     blackout = Blackout()
     blackout:setImage(Data.Image.blackout)
 
@@ -39,6 +41,8 @@ function gameoverState:enter(from, score)
 end
 
 function gameoverState:update(dt)
+    self.from.audio:setPitch(self.from.tween.audio.pitch)
+    self.from.audio:setVolume(self.from.tween.audio.volume)
 end
 
 function gameoverState:draw()
@@ -46,6 +50,7 @@ function gameoverState:draw()
 end
 
 function gameoverState:leave()
+    self.from.audio:stop()
     blackout:delete()
     gameover:delete()
     for i, text in ipairs(texts) do

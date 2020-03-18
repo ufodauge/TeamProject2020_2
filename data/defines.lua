@@ -28,6 +28,10 @@ Const.define('PLAYER_COLLISION_DATA', {600, 300, 14})
 Const.define('PLAYER_FORCE', 6000)
 Const.define('PLAYER_SIZE', {16, 16})
 Const.define('PLAYER_SATIETY_VALUE', 5)
+Const.define('PLAYER_ANIMATION_FRONT', 1)
+Const.define('PLAYER_ANIMATION_LEFT', 2)
+Const.define('PLAYER_ANIMATION_RIGHT', 3)
+Const.define('PLAYER_ANIMATION_BACK', 4)
 
 -- enemy
 Const.define('ENEMY_COLLISION_DATA', {900, 300, 14})
