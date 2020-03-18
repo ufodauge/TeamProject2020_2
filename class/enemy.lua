@@ -8,10 +8,16 @@ function Enemy:init()
     self.playerPosition.x = 0
     self.playerPosition.y = 0
 
+    self.animationManager = AnimationManager()
+    self.animationManager:setTilesets(Data.Animation.ogre)
+    self.animationManager:setPermanence(true)
+
     self.stayInterval = 0
 end
 
 function Enemy:update(dt)
+    self.animationManager:update(dt)
+
     if self.collider:enter('Player') then
         self.stayInterval = 3
     end
@@ -28,6 +34,17 @@ function Enemy:update(dt)
     local vx, vy = self.collider:getLinearVelocity()
     vx, vy = lume.vector(lume.angle(self.collider:getX(), self.collider:getY(), self.playerPosition.x, self.playerPosition.y), ENEMY_VELOCITY)
 
+    if vx >= 0 then
+        self.animationManager:setTile(ENEMY_ANIMATION_RIGHT)
+    else
+        self.animationManager:setTile(ENEMY_ANIMATION_LEFT)
+    end
+    if vy >= 0 then
+        self.animationManager:setTile(ENEMY_ANIMATION_FRONT)
+    else
+        self.animationManager:setTile(ENEMY_ANIMATION_BACK)
+    end
+
     if self.stayInterval > 0 then
         self.stayInterval = self.stayInterval - dt
         vx, vy = 0, 0
@@ -41,7 +58,8 @@ function Enemy:draw()
     self.x, self.y = self.collider:getPosition()
     self.x = self.x - ENEMY_SIZE[1]
     self.y = self.y - ENEMY_SIZE[2]
-    love.graphics.draw(self.image, self.x, self.y)
+    -- love.graphics.draw(self.image, self.x, self.y)
+    self.animationManager:draw(self.x, self.y)
 end
 
 function Enemy:setPhysicsStatus(collision_class, collision_data, world)

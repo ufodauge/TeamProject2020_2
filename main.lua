@@ -13,6 +13,7 @@ Data.Animation = {}
 Data.Animation.animationStamp = require 'data.animation.animationStamp'
 Data.Animation.gameover = require 'data.animation.gameover'
 Data.Animation.player = require 'data.animation.player'
+Data.Animation.ogre = require 'data.animation.ogre'
 
 -- library
 Class = require '30log.30log'

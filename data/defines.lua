@@ -37,6 +37,10 @@ Const.define('PLAYER_ANIMATION_BACK', 4)
 Const.define('ENEMY_COLLISION_DATA', {900, 300, 14})
 Const.define('ENEMY_VELOCITY', 160)
 Const.define('ENEMY_SIZE', {16, 16})
+Const.define('ENEMY_ANIMATION_FRONT', 1)
+Const.define('ENEMY_ANIMATION_LEFT', 2)
+Const.define('ENEMY_ANIMATION_RIGHT', 3)
+Const.define('ENEMY_ANIMATION_BACK', 4)
 
 -- food
 Const.define('FOOD_COLLISION_DATA', {512, 0, 14})

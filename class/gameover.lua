@@ -24,9 +24,9 @@ function Gameover:init()
             Timer.after(
                 1,
                 function()
-                    blackout:delete()
                     State.pop()
                     State.switch(States.Maingame)
+                    blackout:delete()
                 end
             )
         end
