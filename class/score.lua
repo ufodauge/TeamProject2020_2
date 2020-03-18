@@ -21,6 +21,7 @@ end
 
 function Score:draw()
     love.graphics.setColor(0, 0, 0, 1)
+    love.graphics.setFont(Data.Font.middle)
     love.graphics.print('SCORE: ' .. self.score, self.x, self.y)
 end
 
@@ -30,6 +31,10 @@ end
 
 function Score:setScore(score)
     self.score = score
+end
+
+function Score:getScore()
+    return self.score
 end
 
 function Score:setStatus(dScore)

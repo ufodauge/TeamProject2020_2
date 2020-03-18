@@ -6,6 +6,10 @@ function Player:init()
     self.keys = KeyManager()
     self.joysticks = JoystickManager()
 
+    self.animationManager = AnimationManager()
+    self.animationManager:setTilesets(Data.Animation.player)
+    self.animationManager:setPermanence(true)
+
     self.image = nil
     self.collider = nil
 
@@ -17,6 +21,7 @@ end
 function Player:update(dt)
     self.keys:update(dt)
     self.joysticks:update(dt)
+    self.animationManager:update(dt)
 
     local vx, vy = self.collider:getLinearVelocity()
     self.collider:setAngle(lume.angle(0, 0, vx, vy))
@@ -33,9 +38,10 @@ end
 function Player:draw()
     love.graphics.setColor(1, 1, 1, 1)
     self.x, self.y = self.collider:getPosition()
-    self.x = self.x - self.collision_data[3]
-    self.y = self.y - self.collision_data[3]
-    love.graphics.draw(self.image, self.x, self.y)
+    self.x = self.x - PLAYER_SIZE[1]
+    self.y = self.y - PLAYER_SIZE[2]
+    -- love.graphics.draw(self.image, self.x, self.y)
+    self.animationManager:draw(self.x, self.y)
 end
 
 function Player:setPhysicsStatus(collision_class, collision_data, world)
@@ -61,6 +67,7 @@ function Player:setPhysicsStatus(collision_class, collision_data, world)
                 func = function()
                     local vx, vy = self.collider:getLinearVelocity()
                     self.collider:setLinearVelocity(0, vy)
+                    self.animationManager:setTile(PLAYER_ANIMATION_RIGHT)
                 end,
                 rep = false,
                 act = 'pressed'
@@ -78,6 +85,7 @@ function Player:setPhysicsStatus(collision_class, collision_data, world)
                 func = function()
                     local vx, vy = self.collider:getLinearVelocity()
                     self.collider:setLinearVelocity(0, vy)
+                    self.animationManager:setTile(PLAYER_ANIMATION_LEFT)
                 end,
                 rep = false,
                 act = 'pressed'
@@ -95,6 +103,7 @@ function Player:setPhysicsStatus(collision_class, collision_data, world)
                 func = function()
                     local vx, vy = self.collider:getLinearVelocity()
                     self.collider:setLinearVelocity(vx, 0)
+                    self.animationManager:setTile(PLAYER_ANIMATION_BACK)
                 end,
                 rep = false,
                 act = 'pressed'
@@ -112,6 +121,7 @@ function Player:setPhysicsStatus(collision_class, collision_data, world)
                 func = function()
                     local vx, vy = self.collider:getLinearVelocity()
                     self.collider:setLinearVelocity(vx, 0)
+                    self.animationManager:setTile(PLAYER_ANIMATION_FRONT)
                 end,
                 rep = false,
                 act = 'pressed'
@@ -156,7 +166,12 @@ function Player:setPhysicsStatus(collision_class, collision_data, world)
                 key = 'lefty',
                 func = function(axisValue)
                     local vx, vy = self.collider:getLinearVelocity()
-                    self.collider:setLinearVelocity(0, vy)
+                    self.collider:setLinearVelocity(vx, 0)
+                    if axisValue > 0 then
+                        self.animationManager:setTile(PLAYER_ANIMATION_FRONT)
+                    else
+                        self.animationManager:setTile(PLAYER_ANIMATION_BACK)
+                    end
                 end,
                 rep = false,
                 act = 'pressed'
@@ -173,8 +188,12 @@ function Player:setPhysicsStatus(collision_class, collision_data, world)
                 key = 'leftx',
                 func = function(axisValue)
                     local vx, vy = self.collider:getLinearVelocity()
-
-                    self.collider:setLinearVelocity(vx, 0)
+                    self.collider:setLinearVelocity(0, vy)
+                    if axisValue > 0 then
+                        self.animationManager:setTile(PLAYER_ANIMATION_RIGHT)
+                    else
+                        self.animationManager:setTile(PLAYER_ANIMATION_LEFT)
+                    end
                 end,
                 rep = false,
                 act = 'pressed'
@@ -185,6 +204,7 @@ end
 
 function Player:setImage(imageData)
     self.image = imageData
+    self.image:setFilter('nearest')
 end
 
 function Player:isSatiety()

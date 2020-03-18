@@ -2,8 +2,9 @@ local ranking = {}
 
 ranking.name = 'ranking'
 
-function ranking:init()
+local str, scoreValues, bigLabel, scores, back, cursor, start, setting, hanko, onigo
 
+function ranking:init()
     self.keyManager = KeyManager()
     self.keyManager:register(
         {
@@ -14,19 +15,24 @@ function ranking:init()
                 end,
                 rep = false,
                 act = 'pressed'
-            },
+            }
         }
     )
-
 end
 
 function ranking:enter()
     --read
     --love.filesystem.write(love.filesystem.getIdentity(),"999999,088888,007777,000666,000055")
     str = love.filesystem.read(love.filesystem.getIdentity())
-    scoreValues = lume.split(str,",")
-    
-    bigLabel ={
+    scoreValues = lume.split(str, ',')
+
+    for i = 1, RANKING_MAX do
+        if scoreValues[i] == nil or scoreValues[i] == '' then
+            scoreValues[i] = 0
+        end
+    end
+
+    bigLabel = {
         x = 512,
         y = 386,
         sx = 1,
@@ -40,18 +46,18 @@ function ranking:enter()
     }
 
     back = {
-        x = 750+16*7,
+        x = 750 + 16 * 7,
         y = 600,
         cnt = 0,
-        waku = ">     <",
-        moji = " back ",
+        waku = '>     <',
+        moji = ' back ',
         scale = 1
     }
 
     cursor = {
         x = 512,
         y = 386,
-        label = ">     <"
+        label = '>     <'
     }
 
     start = {
@@ -61,7 +67,7 @@ function ranking:enter()
 
     setting = {
         x = 512,
-        y = 386+70
+        y = 386 + 70
     }
 
     hanko = {
@@ -93,6 +99,16 @@ function ranking:enter()
     flux.to(onigo,EASE_TIME,{x = 1024+150}):ease("expoinout")
     flux.to(cursor,EASE_TIME,{x=750+16*7, y = 460+32}):ease("expoinout")
 
+    back.cnt = 0
+    flux.to(bigLabel, EASE_TIME, {y = 30 + 64, sx = 20}):ease('expoinout')
+    flux.to(bigLabel, EASE_TIME, {sy = 2}):ease('elasticout')
+    flux.to(scores, EASE_TIME, {x1 = 512, x2 = 512}):ease('expoinout')
+    flux.to(back, EASE_TIME, {y = 460 + 32}):ease('expoinout')
+    flux.to(start, EASE_TIME, {x = -150}):ease('expoinout')
+    flux.to(setting, EASE_TIME, {x = 1024 + 150}):ease('expoinout')
+    flux.to(hanko, EASE_TIME, {x = -150}):ease('expoinout')
+    flux.to(onigo, EASE_TIME, {x = 1024 + 150}):ease('expoinout')
+    flux.to(cursor, EASE_TIME, {x = 750 + 16 * 7, y = 460 + 32}):ease('expoinout')
 end
 
 function ranking:update(dt)
@@ -101,7 +117,7 @@ function ranking:update(dt)
 
     if back.cnt > 1 then
         back.cnt = back.cnt + 1
-        if back.cnt > EASE_TIME*60 then
+        if back.cnt > EASE_TIME * 60 then
             State.switch(States.Title)
         end
     end
@@ -127,6 +143,18 @@ function ranking:draw()
     self:printCenter(Data.Font.title,Data.Font.size.title,"START", start.x, start.y,1)
     self:printCenter(Data.Font.title,Data.Font.size.title,"SETTING", setting.x, setting.y,1)
 
+    self:printCenter(Data.Font.title, Data.Font.size.title, 'RANKING', bigLabel.x, bigLabel.y, bigLabel.sy)
+    self:printCenter(Data.Font.title, Data.Font.size.title, '1st ' .. scoreValues[1] .. 'pt', scores.x1, 180 + 32, 1)
+    self:printCenter(Data.Font.title, Data.Font.size.title, '2nd ' .. scoreValues[2] .. 'pt', scores.x2, 250 + 32, 1)
+    self:printCenter(Data.Font.title, Data.Font.size.title, '3rt ' .. scoreValues[3] .. 'pt', scores.x1, 320 + 32, 1)
+    self:printCenter(Data.Font.title, Data.Font.size.title, '4th ' .. scoreValues[4] .. 'pt', scores.x2, 390 + 32, 1)
+    self:printCenter(Data.Font.title, Data.Font.size.title, '5th ' .. scoreValues[5] .. 'pt', scores.x1, 460 + 32, 1)
+
+    self:printCenter(Data.Font.title, Data.Font.size.title, cursor.label, cursor.x, cursor.y, 1)
+    self:printCenter(Data.Font.title, Data.Font.size.title, back.moji, back.x, back.y, back.scale)
+
+    self:printCenter(Data.Font.title, Data.Font.size.title, 'START', start.x, start.y, 1)
+    self:printCenter(Data.Font.title, Data.Font.size.title, 'SETTING', setting.x, setting.y, 1)
 end
 
 function ranking:leave()
@@ -151,10 +179,9 @@ function ranking:pressZ()
         end
 end
 
-
-function ranking:printCenter(fontType,fontSize,char,x,y,scale)
+function ranking:printCenter(fontType, fontSize, char, x, y, scale)
     love.graphics.setFont(fontType)
-    love.graphics.print(char, x-(#char/2)*fontSize/2*scale, y-fontSize/2*scale,0,scale)
+    love.graphics.print(char, x - (#char / 2) * fontSize / 2 * scale, y - fontSize / 2 * scale, 0, scale)
     --love.graphics.print(char, -(#char/2)*fontSize/2*scale, -fontSize/2*scale,0.08,scale,scale,-x, -y)
 end
 return ranking

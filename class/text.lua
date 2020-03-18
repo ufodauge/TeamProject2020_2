@@ -1,5 +1,7 @@
 local Text = Instance:extend('Text')
 
+local DEFAULT_LIMIT = 400
+
 local Tween = Timer.tween
 
 function Text:init()
@@ -8,21 +10,34 @@ function Text:init()
     self.text = ''
     self.alignment = 'left'
     self.font = nil
+    self.limit = DEFAULT_LIMIT
     self.delay = 0
+    self.tweens = {}
 
     self.ms = 0
 
-    self.color = {1, 1, 1, 0}
+    self.colorTable = {0, 0, 0, 0}
 end
 
 function Text:update(dt)
-    self.ms = self.ms + dt * 1000
+    self.ms = self.ms + dt
+    for i, tween in ipairs(self.tweens) do
+        if not tween.played and tween.delay >= self.ms then
+            self.colorTable = tween.colorTableFrom
+            tween.played = true
+
+            Tween(tween.ms / 1000, self.colorTable, tween.colorTableTo, tween.method)
+        end
+    end
 end
 
 function Text:draw()
-    love.graphics.setColor(1, 1, 1, 1)
-    if self.ms >= self.delay then
+    love.graphics.setColor(unpack(self.colorTable))
+    if self.font then
+        love.graphics.setFont(self.font)
     end
+
+    love.graphics.printf(self.text, self.x, self.y, self.limit, self.alignment)
 end
 
 function Text:delete()
@@ -42,13 +57,22 @@ function Text:setFont(font)
     self.font:setFilter('nearest', 'nearest')
 end
 
-function Text:setDelay(ms)
-    self.delay = ms
+function Text:setLimit(limit)
+    self.limit = limit
 end
 
-function Text:setTween(ms, colorTableTo, method)
-    self.colorTable = {0, 0, 0, 0}
-    Timer.tween(ms / 1000, self.colorTable, colorTableTo, method)
+function Text:setTween(delay, ms, colorTableFrom, colorTableTo, method)
+    table.insert(
+        self.tweens,
+        {
+            delay = delay,
+            played = false,
+            ms = ms,
+            colorTableFrom = colorTableFrom,
+            colorTableTo = colorTableTo,
+            method = method
+        }
+    )
 end
 
 return Text

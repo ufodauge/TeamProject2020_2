@@ -170,6 +170,26 @@ function Debug:init(valid)
                 },
                 {
                     attribute = 'dir',
+                    name = 'data',
+                    contents = {
+                        {
+                            attribute = 'file',
+                            name = 'clear',
+                            contents = function()
+                                print(love.filesystem.write(love.filesystem.getIdentity(), ''))
+                            end
+                        },
+                        {
+                            attribute = 'file',
+                            name = 'return',
+                            contents = function()
+                                move_path(self, '..')
+                            end
+                        }
+                    }
+                },
+                {
+                    attribute = 'dir',
                     name = 'state',
                     contents = {}
                 },

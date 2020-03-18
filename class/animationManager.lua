@@ -63,6 +63,9 @@ function AnimationManager:update(dt)
             if self.animationid < self.quads[self.type].animationmax then
                 self.animationid = self.animationid + 1
             else
+                if self.permanence then
+                    self.animationid = 1
+                end
                 self.isPlaying = false
             end
         end

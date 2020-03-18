@@ -7,10 +7,13 @@ lume = require 'lume'
 Data = {}
 Data.Font = require 'data.font'
 Data.Image = require 'data.image'
+Data.Audio = require 'data.audio'
 
 Data.Animation = {}
 Data.Animation.animationStamp = require 'data.animation.animationStamp'
 Data.Animation.gameover = require 'data.animation.gameover'
+Data.Animation.player = require 'data.animation.player'
+Data.Animation.ogre = require 'data.animation.ogre'
 
 -- library
 Class = require '30log.30log'
@@ -19,7 +22,7 @@ State = require 'hump.gamestate'
 Timer = require 'hump.timer'
 Windfield = require 'windfield'
 Const = require 'const.const'
-flux = require "flux"
+flux = require 'flux'
 
 -- defines
 require 'data.defines'
@@ -65,7 +68,7 @@ Wall = require 'class.wall'
 
 function love.load()
     -- デバッグモードの有効化の際は true を渡すこと
-    debug = Debug(true)
+    debug = Debug(false)
 
     State.registerEvents()
     State.switch(States.Title)

@@ -1,6 +1,14 @@
 local maingame = {}
 
+local Tween = Timer.tween
+
 maingame.name = 'maingame'
+maingame.tween = {
+    audio = {
+        pitch = 1,
+        volume = 0
+    }
+}
 
 local background = nil
 local countdownTimer = nil
@@ -21,6 +29,15 @@ function maingame:init()
 end
 
 function maingame:enter()
+    -- やけくそ実装その一
+    maingame.audio = {pitch = 1, volume = 0}
+    Tween(3, maingame.tween.audio, {pitch = 1, volume = 1}, 'linear')
+    maingame.audio = Data.Audio.maingame
+    maingame.audio:setPitch(maingame.tween.audio.pitch)
+    maingame.audio:setVolume(maingame.tween.audio.volume)
+    maingame.audio:setLooping(true)
+    maingame.audio:play()
+
     background = {}
     background = Background()
     background:setPosition(BACKGROUND_X, BACKGROUND_Y)
@@ -111,6 +128,9 @@ function maingame:enter()
 end
 
 function maingame:update(dt)
+    maingame.audio:setPitch(maingame.tween.audio.pitch)
+    maingame.audio:setVolume(maingame.tween.audio.volume)
+
     -- stampgame
 
     for i = 1, PAPER_TOTAL do
@@ -126,7 +146,7 @@ function maingame:update(dt)
         papers[stampedIndex]:stamp()
 
         -- ハンコ1枚押して食べ物を出現させる場合の処理
-        if Paper:getPenalty() ~= 1 then
+        if Paper:getPenalty() ~= 1 and not papers[stampedIndex]:isImprinted() then
             foods[#foods + 1] = Food()
             foods[#foods]:setPhysicsStatus('Food', FOOD_COLLISION_DATA, world)
             foods[#foods]:setImage(Data.Image.food)
@@ -177,13 +197,43 @@ function maingame:update(dt)
 
     -- カウント終了時の処理
     if countdownTimer:isOver() then
-        State.push(States.Gameover)
+        love.filesystem.append(love.filesystem.getIdentity(), tostring(score:getScore()) .. ',')
+        print(love.filesystem.read(love.filesystem.getIdentity()))
+
+        local str = love.filesystem.read(love.filesystem.getIdentity())
+        local scoreValues = lume.split(str, ',')
+        scoreValues =
+            lume.reject(
+            scoreValues,
+            function(a)
+                return a == ''
+            end
+        )
+        for i = 1, #scoreValues do
+            scoreValues[i] = tonumber(scoreValues[i])
+        end
+        scoreValues =
+            lume.sort(
+            scoreValues,
+            function(a, b)
+                return a > b
+            end
+        )
+        scoreValues = lume.slice(scoreValues, 1, 50)
+
+        love.filesystem.write(love.filesystem.getIdentity(), '')
+        for i, eachscore in ipairs(scoreValues) do
+            love.filesystem.append(love.filesystem.getIdentity(), tostring(eachscore) .. ',')
+        end
+        print(love.filesystem.read(love.filesystem.getIdentity()))
+
+        State.push(States.Gameover, score:getScore())
     end
 end
 
 function maingame:draw()
     -- for debugging
-    world:draw(0.3)
+    -- world:draw(0.3)
 end
 
 function maingame:leave()
